@@ -1,0 +1,30 @@
+{
+  "name": "react-windrose",
+  "version": "1.0.0",
+  "description": "React component for wind rose diagrams",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "windrose",
+    "react",
+    "compass",
+    "chart",
+    "windrose",
+    "diagram"
+  ],
+  "author": "Jules Blom",
+  "license": "MIT",
+  "dependencies": {
+    "d3-array": "^3.1.6",
+    "d3-scale": "^4.0.2",
+    "d3-shape": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/d3-array": "^3.0.3",
+    "@types/d3-scale": "^4.0.2",
+    "@types/d3-shape": "^3.1.0",
+    "typescript": "^4.7.4"
+  }
+}
