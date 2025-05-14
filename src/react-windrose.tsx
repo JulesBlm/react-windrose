@@ -1,5 +1,4 @@
 /* TODO
- * 1. Rethink Props/configuration in YTicks, would one want certain circles to be styled differently?
  * 3. Get rid of Magic Numbers!
  * 4. Documentation
  * 5. Examples
@@ -7,7 +6,7 @@
  */
 import { max } from "d3-array";
 import { useMemo, type ReactNode } from "react";
-import { Axes, UnitsLabel, YTicks } from "./axes";
+import { Axes, Tick } from "./axes";
 import { DirectionLabels } from "./labels";
 import { Ring } from "./ring";
 import type { WindroseDataPoint } from "./types";
@@ -84,7 +83,6 @@ export function WindRose<
       viewBox={`${-width / 2}, ${-height / 2}, ${width}, ${height}`}
       name="windrose"
       height={600}
-      style={{ border: "1px solid red" }}
       fontFamily="sans-serif"
     >
       <g name="rings">
@@ -114,9 +112,15 @@ export function WindRose<
         yTicks={yTicks}
       />
 
-      <YTicks yScale={yScale} yTicks={yTicks} />
+      <g name="ticks" textAnchor="middle" fontSize={18}>
+        {yTicks.map((tick) => (
+          <Tick key={tick} tick={tick} yScale={yScale} />
+        ))}
+      </g>
 
-      <UnitsLabel yUnits={yUnits} outerRadius={outerRadius} />
+      <text name="units-label" y={-outerRadius} x={15}>
+        {yUnits}
+      </text>
 
       {children}
     </svg>
