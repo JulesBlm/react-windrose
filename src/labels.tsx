@@ -1,7 +1,7 @@
-import React, { type ComponentPropsWithoutRef } from "react";
 import { type ScaleBand } from "d3-scale";
+import { type SVGProps } from "react";
 
-export interface DirectionLabelsProps extends ComponentPropsWithoutRef<"g"> {
+export interface DirectionLabelsProps extends SVGProps<SVGGElement> {
   angleOffset: number;
   outerRadius: number;
   xScale: ScaleBand<string>;

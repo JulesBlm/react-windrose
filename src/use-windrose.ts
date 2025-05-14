@@ -1,26 +1,21 @@
-import { max, sum } from "d3-array";
 import { scaleBand, scaleLinear, scaleOrdinal } from "d3-scale";
-import { arc, SeriesPoint, stack } from "d3-shape";
+import { arc, type SeriesPoint, stack } from "d3-shape";
 import { useMemo } from "react";
-import { TURN, type WindroseDataPoint } from "./react-windrose";
+import type { WindroseDataPoint } from "./types";
+import { radians, TURN } from "./util";
 
-type UseWindRose<
-  TBins extends ReadonlyArray<string>,
-  TDirections extends ReadonlyArray<string>
-> = {
-  directions: TDirections;
-  bins: TBins;
-  data: Array<WindroseDataPoint<TBins>>;
+type UseWindRose = {
+  directions: string[];
+  bins: Array<string> | ReadonlyArray<string>;
+  data: Array<WindroseDataPoint<string, string>>;
+  maxY: number;
   innerRadius: number;
   outerRadius: number;
   colorScheme: ReadonlyArray<string>;
   padAngle: number;
 };
 
-export function useWindRose<
-  TBins extends ReadonlyArray<string>,
-  TDirections extends ReadonlyArray<string>
->({
+export function useWindRose({
   data,
   bins,
   innerRadius,
@@ -28,24 +23,8 @@ export function useWindRose<
   directions,
   colorScheme,
   padAngle,
-}: UseWindRose<TBins, TDirections>) {
-  // wait is it a good idea to do it here?
-  const dataWithRowTotals: Array<WindroseDataPoint<TBins> & { total: number }> =
-    useMemo(() => data.map((r) => ({ ...r, total: sumRow(r) })), [data]);
-
-  type DataTypeWithTotals = (typeof dataWithRowTotals)[number];
-  // const tickFormat = y.tickFormat(x => `${x}\%`);
-
-  const yScale = useMemo(() => {
-    const maxY = max(dataWithRowTotals, (d) => d.total);
-
-    return scaleLinear().domain([0, maxY!]).range([innerRadius, outerRadius]);
-  }, [innerRadius, outerRadius, dataWithRowTotals]);
-
-  const colorScale = scaleOrdinal<TBins[number]>()
-    .domain(bins)
-    .range(colorScheme);
-
+  maxY,
+}: UseWindRose) {
   // the x scale is for the position of the bars along the circle, one full turn
   const xScale = useMemo(
     () =>
@@ -56,9 +35,17 @@ export function useWindRose<
     [directions]
   );
 
+  const yScale = useMemo(() => {
+    return scaleLinear().domain([0, maxY]).range([innerRadius, outerRadius]);
+  }, [innerRadius, outerRadius, maxY]);
+
+  const colorScale = scaleOrdinal<string>()
+    .domain(bins)
+    .range(colorScheme);
+
   const arcGenerator = useMemo(
     () =>
-      arc<SeriesPoint<DataTypeWithTotals>>()
+      arc<SeriesPoint<WindroseDataPoint<string, string>>>()
         .startAngle((d) => xScale(d.data.direction)!)
         .endAngle((d) => xScale(d.data.direction)! + xScale.bandwidth())
         .innerRadius((d) => yScale(d[0]))
@@ -70,8 +57,9 @@ export function useWindRose<
 
   const stackedData = useMemo(
     () =>
-      stack<DataTypeWithTotals, TBins[number]>().keys(bins)(dataWithRowTotals),
-    [dataWithRowTotals, bins]
+      stack<WindroseDataPoint<string, string>, string>()
+        .keys(bins)(data),
+    [data, bins]
   );
 
   return {
@@ -80,20 +68,7 @@ export function useWindRose<
     colorScale,
     arcGenerator,
     stackedData,
+    yLineStep: TURN / data.length,
+    angleOffset: -(TURN / data.length) / 2,
   };
-}
-
-function sumRow<DataType extends Record<string, number | string>>(
-  row: DataType
-) {
-  const rowValues = Object.entries(row)
-    .filter(([k]) => k !== "direction")
-    .map(([k, v]) => Number(v));
-  const rowTowal = sum(rowValues);
-
-  return rowTowal;
-}
-
-export function radians(degrees: number) {
-  return (degrees * Math.PI) / 180;
 }

@@ -1,94 +1,76 @@
 import { range } from "d3-array";
 import type { ScaleLinear } from "d3-scale";
-import type { Arc, Series } from "d3-shape";
-import React from "react";
+import type { SVGProps } from "react";
 
-export interface RingProps {
-  d: Series<WindroseDataPoint, string>;
-  angleOffset: number;
-  fill: string;
-  arcGenerator: Arc<any, any>; //TODO
-  name: string;
-}
-
-export function Ring({ d, angleOffset, fill, arcGenerator, name }: RingProps) {
-  return (
-    <g name={`ring-bin-${name}`} fill={fill}>
-      {d.map((e) => (
-        <path
-          // name={e.data.direction} // should use accessor
-          key={angleOffset}
-          d={arcGenerator(e)}
-          transform={`rotate(${angleOffset})`}
-        />
-      ))}
-    </g>
-  );
-}
-
-export interface YTicksProps {
+export interface YTicksProps extends SVGProps<SVGGElement> {
   yTicks: Array<number>;
   yScale: ScaleLinear<number, number>;
-  outerRadius: number;
-  yUnits: string;
-  // format: (d: number) => string |;
+  circleProps?: SVGProps<SVGCircleElement>;
+  textProps?: SVGProps<SVGTextElement>;
 }
 
-export function YTicks({ yTicks, yScale, outerRadius, yUnits }: YTicksProps) {
+export function YTicks({ yTicks, yScale, circleProps, textProps, ...props }: YTicksProps) {
   const tickFormat = yScale.tickFormat();
   return (
-    <g name="y-ticks" textAnchor="middle" fontFamily="sans-serif" fontSize={18}>
+    <g name="y-ticks" textAnchor="middle" fontSize={18} {...props}>
       {yTicks.map((tick) => (
         <g name="y-circle-tick" key={tick}>
           <circle
             fill="none"
-            stroke="gray" // make configurable
-            strokeDasharray="4,4" // make configurable
+            stroke="gray" 
+            strokeDasharray="4,4" 
+            {...circleProps}
             r={yScale(tick)}
           />
+ 
           <text
-            y={-yScale(tick)}
-            x={-8} // make configurable
+            x={-8} 
             paintOrder="stroke"
-            strokeWidth="1.4px" // make configurable
-            stroke="white" // make configurable
+            strokeWidth="1.4px" 
+            stroke="white" 
+            {...textProps}
+            y={-yScale(tick)}
           >
             {tickFormat(tick)}
           </text>
         </g>
       ))}
-
-      <text
-        y={-outerRadius}
-        x={30}
-        fontSize={18}
-        paintOrder="stroke"
-        strokeWidth="1.4px" // make configurable
-        stroke="white" // make configurable
-        name="yUnitsLabel"
-      >
-        {yUnits}
-      </text>
     </g>
   );
 }
 
-export interface AxesProps {
+export interface UnitsLabelProps extends SVGProps<SVGTextElement> {
+  yUnits: string
+  outerRadius: number
+}
+
+export function UnitsLabel({ yUnits, outerRadius, x = 30, ...props }: UnitsLabelProps) {
+  return (
+    <text name="units-label" y={-outerRadius} x={x} {...props}>
+      {yUnits}
+    </text>
+  );
+}
+
+export interface AxesProps extends SVGProps<SVGGElement> {
   yLineStep: number;
   innerRadius: number;
   yScale: ScaleLinear<number, number>;
   yTicks: Array<number>;
 }
 
-export function Axes({ yLineStep, innerRadius, yScale, yTicks }: AxesProps) {
+export function Axes({ yLineStep, innerRadius, yScale, yTicks, ...props }: AxesProps) {
+  const x1 = innerRadius;
+  const x2 = yScale(yTicks.toReversed()[0]);  // to the last tick circle
+
   return (
-    <g name="axes" fill="none" stroke="gray" strokeDasharray="1,4">
-      {range(-90, 270, yLineStep).map((d) => (
+    <g name="axes" fill="none" stroke="gray" strokeDasharray="1,4" {...props}>
+      {range(-90, 270, yLineStep).map((rotation) => (
         <line
-          key={d}
-          x1={innerRadius}
-          x2={yScale(yTicks.reverse()[0])} // to the last tick circle
-          transform={`rotate(${d})`}
+          key={rotation}
+          x1={x1}
+          x2={x2}
+          transform={`rotate(${rotation})`}
         />
       ))}
     </g>
