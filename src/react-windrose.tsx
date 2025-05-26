@@ -6,18 +6,18 @@
  * 6. Tests
  */
 import { useMemo, type ReactNode, type SVGProps } from "react";
-import { RadialLines, Tick } from "./ticks-radial-lines";
-import { DirectionLabels } from "./labels";
-import { Ring } from "./ring";
-import type { WindroseDataPoint } from "./types";
-import { useWindRose } from "./use-windrose";
-import { blueColorScheme, sumRow } from "./util";
+import { RadialLines, Tick } from "./ticks-radial-lines.js";
+import { DirectionLabels } from "./labels.js";
+import { Ring } from "./ring.js";
+import type { WindroseDataPoint } from "./types.js";
+import { useWindRose } from "./use-windrose.js";
+import { blueColorScheme, sumRow } from "./util.js";
 
 const directionAccessor = (d: { direction: string }) => d.direction;
 
 export interface WindRoseProps<
   TBins extends ReadonlyArray<string> = Array<string>,
-  TDirections extends ReadonlyArray<string> = Array<string>
+  TDirections extends ReadonlyArray<string> = Array<string>,
 > extends SVGProps<SVGSVGElement> {
   width: number;
   height: number;
@@ -34,7 +34,7 @@ export interface WindRoseProps<
 
 export function WindRose<
   TBins extends ReadonlyArray<string>,
-  TDirections extends ReadonlyArray<string>
+  TDirections extends ReadonlyArray<string>,
 >({
   width,
   height,
@@ -55,7 +55,7 @@ export function WindRose<
 
   const dataWithRowTotals = useMemo(
     () => data.map((r) => ({ ...r, total: sumRow(r) })),
-    [data]
+    [data],
   );
 
   const {

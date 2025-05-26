@@ -1,6 +1,6 @@
 import type { Arc, Series, SeriesPoint } from "d3-shape";
-import type { WindroseDataPoint } from "./types";
 import type { SVGProps } from "react";
+import type { WindroseDataPoint } from "./types.js";
 
 export interface RingProps extends SVGProps<SVGGElement> {
   element: Series<WindroseDataPoint<string, string>, string>;

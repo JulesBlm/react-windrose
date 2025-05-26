@@ -1,9 +1,9 @@
+import { max } from "d3-array";
 import { scaleBand, scaleLinear, scaleOrdinal } from "d3-scale";
 import { arc, type SeriesPoint, stack } from "d3-shape";
 import { useMemo } from "react";
-import type { WindroseDataPoint } from "./types";
-import { radians, TURN } from "./util";
-import { max } from "d3-array";
+import type { WindroseDataPoint } from "./types.js";
+import { radians, TURN } from "./util.js";
 
 type UseWindRose = {
   directions: string[];
@@ -33,7 +33,7 @@ export function useWindRose({
         .domain(directions)
         .range([0, radians(TURN)])
         .align(0),
-    [directions]
+    [directions],
   );
 
   // A radial y-scale maintains area proportionality of radial bars
@@ -52,12 +52,12 @@ export function useWindRose({
         .outerRadius((d) => yScale(d[1]))
         .padRadius(innerRadius)
         .padAngle(padAngle),
-    [innerRadius, padAngle, xScale, yScale]
+    [innerRadius, padAngle, xScale, yScale],
   );
 
   const stackedData = useMemo(
     () => stack<WindroseDataPoint<string, string>, string>().keys(bins)(data),
-    [data, bins]
+    [data, bins],
   );
 
   const angleStep = TURN / data.length;

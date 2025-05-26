@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-export interface LegendProps extends SVGProps<SVGGElement>   {
+export interface LegendProps extends SVGProps<SVGGElement> {
   bins: Array<string>;
   colorScheme: Array<string> | ReadonlyArray<string>;
   rectWidth?: number;

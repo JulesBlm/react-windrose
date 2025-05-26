@@ -2,6 +2,8 @@
 
 A customizable React component library for creating wind rose diagrams. Wind rose charts display the distribution of wind speed and direction, commonly used in meteorology and environmental analysis.
 
+Built on top of D3.js for calculations and scales while using React for rendering SVG elements, this library provides a flexible way to create interactive wind rose diagrams.
+
 <!-- TODO example windrose -->
 
 ## Installation
@@ -16,7 +18,25 @@ npm install react-windrose
 
 ```jsx
 import { WindRose } from "react-windrose";
-import { cardinalDirections } from "react-windrose/util";
+
+const cardinalDirections = [
+  "N",
+  "NNE",
+  "NE",
+  "ENE",
+  "E",
+  "ESE",
+  "SE",
+  "SSE",
+  "S",
+  "SSW",
+  "SW",
+  "WSW",
+  "W",
+  "WNW",
+  "NW",
+  "NNW",
+]
 
 // Define your data
 const data = [
@@ -131,7 +151,7 @@ The `data` prop should be an array of objects with the following structure:
 ```typescript
 type WindroseDataPoint<
   TBinKeys extends string,
-  TDirection extends string = string
+  TDirection extends string = string,
 > = {
   direction: TDirection; // Wind direction (e.g., "N", "NE")
   total: number; // Auto-calculated total of all bin values
@@ -155,6 +175,31 @@ The `WindRose` component can be customized in various ways:
 
 You can create custom wind rose diagrams by using the `useWindRose` hook and composing the individual components. This gives you complete control over the appearance of your wind rose.
 
+### `useWindRose`
+
+The `useWindRose` hook provides all the necessary scales and generators for creating wind rose diagrams:
+
+```typescript
+const {
+  xScale, // D3 scale for the angular direction
+  yScale, // D3 scale for the radial values
+  colorScale, // D3 scale for the colors
+  arcGenerator, // D3 arc generator
+  stackedData, // Stacked data for rendering
+  angleStep, // Step size for radial lines (360 / data.length)
+  angleOffset, // Angle offset for proper orientation (-angleStep / 2)
+} = useWindRose({
+  data, // Your data with row totals (WindroseDataPoint[])
+  bins, // Array of bin names (Array<string> | ReadonlyArray<string>)
+  innerRadius, // Inner radius of the wind rose (number)
+  outerRadius, // Outer radius of the wind rose (number)
+  directions, // Array of direction values (string[])
+  colorScheme, // Color scheme for the bins (ReadonlyArray<string>)
+  padAngle, // Padding angle between segments (number)
+  maxY, // Optional maximum y value for scale (number, defaults to max total in data)
+});
+```
+
 ### Components
 
 - `Ring`: Renders a single segment ring for a specific bin
@@ -166,7 +211,13 @@ You can create custom wind rose diagrams by using the `useWindRose` hook and com
 
 ```jsx
 import { useMemo } from "react";
-import { Ring, RadialLines, DirectionLabels, Tick, useWindRose } from "react-windrose";
+import {
+  Ring,
+  RadialLines,
+  DirectionLabels,
+  Tick,
+  useWindRose,
+} from "react-windrose";
 import { sumRow } from "react-windrose/util";
 
 function CustomWindRose({ data, bins, width, height, colorScheme }) {
@@ -177,7 +228,7 @@ function CustomWindRose({ data, bins, width, height, colorScheme }) {
   // Calculate row totals
   const dataWithRowTotals = useMemo(
     () => data.map((r) => ({ ...r, total: sumRow(r) })),
-    [data]
+    [data],
   );
 
   // Use the hook to get scales and generators
@@ -258,31 +309,6 @@ function CustomWindRose({ data, bins, width, height, colorScheme }) {
     </svg>
   );
 }
-```
-
-### Using the `useWindRose` Hook
-
-The `useWindRose` hook provides all the necessary scales and generators for creating wind rose diagrams:
-
-```typescript
-const {
-  xScale, // D3 scale for the angular direction
-  yScale, // D3 scale for the radial values
-  colorScale, // D3 scale for the colors
-  arcGenerator, // D3 arc generator
-  stackedData, // Stacked data for rendering
-  angleStep, // Step size for radial lines (360 / data.length)
-  angleOffset, // Angle offset for proper orientation (-angleStep / 2)
-} = useWindRose({
-  data, // Your data with row totals (WindroseDataPoint[])
-  bins, // Array of bin names (Array<string> | ReadonlyArray<string>)
-  innerRadius, // Inner radius of the wind rose (number)
-  outerRadius, // Outer radius of the wind rose (number)
-  directions, // Array of direction values (string[])
-  colorScheme, // Color scheme for the bins (ReadonlyArray<string>)
-  padAngle, // Padding angle between segments (number)
-  maxY, // Optional maximum y value for scale (number, defaults to max total in data)
-});
 ```
 
 This approach allows you to create highly customized wind rose visualizations while still leveraging the core functionality of the library.
