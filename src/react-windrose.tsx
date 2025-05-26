@@ -1,10 +1,3 @@
-/* TODO
- * 3. Get rid of Magic Numbers!
- * 4. Documentation
- * 5. Legend!
- * 5. Examples
- * 6. Tests
- */
 import { useMemo, type ReactNode, type SVGProps } from "react";
 import { RadialLines, Tick } from "./ticks-radial-lines.js";
 import { DirectionLabels } from "./labels.js";
@@ -26,6 +19,7 @@ export interface WindRoseProps<
   yUnits: string;
   colorScheme: ReadonlyArray<string>;
   tickCount?: number;
+  outerRadius?: number;
   innerRadius?: number;
   padAngle?: number;
   maxY?: number;
@@ -43,13 +37,13 @@ export function WindRose<
   yUnits,
   colorScheme = blueColorScheme,
   innerRadius = 20,
+  outerRadius = Math.min(width, height) / 2.5,
   tickCount = 4,
   padAngle = 0.05,
   maxY,
   children,
   ...props
 }: WindRoseProps<TBins, TDirections>) {
-  const outerRadius = Math.min(width, height) / 2.5;
 
   const directions = data.map(directionAccessor);
 

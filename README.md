@@ -133,8 +133,6 @@ A component for adding a legend to the wind rose diagram.
 | ------------- | -------------------------------------- | -------- | ------------- | ---------------------------------------- |
 | `bins`        | Array<string>                          | Yes      | -             | Array of bin names                       |
 | `colorScheme` | Array<string> \| ReadonlyArray<string> | Yes      | -             | Array of colors for the bins             |
-| `x`           | number                                 | No       | 0             | X-coordinate position of the legend      |
-| `y`           | number                                 | No       | 0             | Y-coordinate position of the legend      |
 | `rectWidth`   | number                                 | No       | 18            | Width of the legend rectangles           |
 | `rectHeight`  | number                                 | No       | rectWidth     | Height of the legend rectangles          |
 | `spacingY`    | number                                 | No       | rectWidth + 2 | Vertical spacing between legend items    |
@@ -163,7 +161,7 @@ type WindroseDataPoint<
 
 ## Customization
 
-The `WindRose` component can be customized in various ways:
+The `WindRose` component can be configured in various ways:
 
 - Change colors with the `colorScheme` prop
 - Adjust the size with `width` and `height` props

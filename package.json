@@ -15,8 +15,7 @@
     "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
     "format": "prettier --write .",
     "build": "tsc",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "lint": "eslint ."
   },
   "type": "module",
   "files": [
