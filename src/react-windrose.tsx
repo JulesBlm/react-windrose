@@ -1,33 +1,34 @@
 /* TODO
  * 3. Get rid of Magic Numbers!
  * 4. Documentation
+ * 5. Legend!
  * 5. Examples
  * 6. Tests
  */
-import { max } from "d3-array";
-import { useMemo, type ReactNode } from "react";
-import { Axes, Tick } from "./axes";
+import { useMemo, type ReactNode, type SVGProps } from "react";
+import { RadialLines, Tick } from "./ticks-radial-lines";
 import { DirectionLabels } from "./labels";
 import { Ring } from "./ring";
 import type { WindroseDataPoint } from "./types";
 import { useWindRose } from "./use-windrose";
-import { defaultColorScheme, sumRow } from "./util";
+import { blueColorScheme, sumRow } from "./util";
 
 const directionAccessor = (d: { direction: string }) => d.direction;
 
 export interface WindRoseProps<
   TBins extends ReadonlyArray<string> = Array<string>,
   TDirections extends ReadonlyArray<string> = Array<string>
-> {
+> extends SVGProps<SVGSVGElement> {
   width: number;
   height: number;
   data: Array<WindroseDataPoint<TBins[number], TDirections[number]>>;
   bins: TBins;
   yUnits: string;
   colorScheme: ReadonlyArray<string>;
-  nrOfYTicks?: number;
+  tickCount?: number;
   innerRadius?: number;
   padAngle?: number;
+  maxY?: number;
   children?: ReactNode;
 }
 
@@ -40,11 +41,13 @@ export function WindRose<
   data,
   bins,
   yUnits,
-  colorScheme = defaultColorScheme,
+  colorScheme = blueColorScheme,
   innerRadius = 20,
-  nrOfYTicks = 5,
+  tickCount = 4,
   padAngle = 0.05,
+  maxY,
   children,
+  ...props
 }: WindRoseProps<TBins, TDirections>) {
   const outerRadius = Math.min(width, height) / 2.5;
 
@@ -55,18 +58,15 @@ export function WindRose<
     [data]
   );
 
-  const maxY = max(dataWithRowTotals, (d) => d.total) ?? 0;
-
   const {
     xScale,
     yScale,
     colorScale,
     arcGenerator,
     stackedData,
-    yLineStep,
+    angleStep,
     angleOffset,
   } = useWindRose({
-    maxY,
     data: dataWithRowTotals,
     innerRadius,
     outerRadius,
@@ -74,16 +74,18 @@ export function WindRose<
     directions,
     bins,
     padAngle,
+    maxY,
   });
 
-  const yTicks = yScale.ticks(nrOfYTicks);
+  const yTicks = yScale.ticks(tickCount);
 
   return (
     <svg
       viewBox={`${-width / 2}, ${-height / 2}, ${width}, ${height}`}
       name="windrose"
-      height={600}
+      width={width}
       fontFamily="sans-serif"
+      {...props}
     >
       <g name="rings">
         {stackedData.map((element) => (
@@ -105,11 +107,11 @@ export function WindRose<
         outerRadius={outerRadius}
       />
 
-      <Axes
-        yLineStep={yLineStep}
+      <RadialLines
+        angleStep={angleStep}
         innerRadius={innerRadius}
         yScale={yScale}
-        yTicks={yTicks}
+        tickCount={tickCount}
       />
 
       <g name="ticks" textAnchor="middle" fontSize={18}>
@@ -118,9 +120,11 @@ export function WindRose<
         ))}
       </g>
 
-      <text name="units-label" y={-outerRadius} x={15}>
-        {yUnits}
-      </text>
+      {yUnits ? (
+        <text name="units-label" y={-outerRadius} x={15}>
+          {yUnits}
+        </text>
+      ) : null}
 
       {children}
     </svg>

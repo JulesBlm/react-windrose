@@ -32,7 +32,11 @@ export function Ring({
             key={`${element.key}-${point.data.direction}`}
             d={path}
             transform={`rotate(${angleOffset})`}
-          />
+          >
+            <title>
+              {point.data.direction}: {name}
+            </title>
+          </path>
         );
       })}
     </g>

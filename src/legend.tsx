@@ -1,46 +1,56 @@
-import { type ScaleOrdinal } from "d3-scale";
+import type { SVGProps } from "react";
 
-export interface LegendProps {
+export interface LegendProps extends SVGProps<SVGGElement>   {
   bins: Array<string>;
-  binsTitle: string;
-  binUnits: string;
-  colorScale: ScaleOrdinal<string, string, never>;
-  outerRadius: number;
+  colorScheme: Array<string> | ReadonlyArray<string>;
+  rectWidth?: number;
+  rectHeight?: number;
+  spacingY?: number;
+  textX?: number;
+  textY?: number;
+  rectProps?: React.SVGProps<SVGRectElement>;
+  textProps?: React.SVGProps<SVGTextElement>;
+  children?: React.ReactNode;
 }
 
 export function Legend({
   bins,
-  binsTitle,
-  binUnits,
-  colorScale,
-  outerRadius,
+  colorScheme,
+  rectWidth = 18,
+  rectHeight = rectWidth,
+  spacingY = rectWidth + 2,
+  textX = rectWidth + 4,
+  textY = rectWidth / 2,
+  rectProps,
+  textProps,
+  children,
+  ...props
 }: LegendProps) {
-  const fill = colorScale(bins[0]);
+  if (colorScheme.length < bins.length) {
+    throw new Error("Color scheme must at least as long as bins");
+  }
+  const legendColorScheme = colorScheme.slice(0, bins.length).toReversed();
 
-  // A LOT OF MAGIC NUBMERS
   return (
-    <g className="legend" transform={`translate(${outerRadius - 10},0)`}>
-      <text
-        textDecoration="underline"
-        textAnchor="end"
-        transform={`translate(40,${-outerRadius - 30})`}
-      >
-        {binsTitle} {binUnits ? `(${binUnits})` : null}
-      </text>
-      {[...bins].reverse().map((legendEntry, i) => (
-        <g
-          transform={`translate(0,${-outerRadius - 25 + i * 20})`}
-          key={legendEntry}
-        >
+    <g name="legend" {...props}>
+      {children}
+      {[...bins].toReversed().map((legendEntry, index) => (
+        <g transform={`translate(0,${index * spacingY})`} key={legendEntry}>
           <rect
-            fill={fill}
-            // make these customizable
-            width={18}
-            height={18}
-            stroke="dimgray"
-            strokeWidth={0.5}
+            fill={legendColorScheme[index]}
+            width={rectWidth}
+            height={rectHeight}
+            stroke="black"
+            {...rectProps}
           />
-          <text x={24} y={9} dy="0.35em" fontFamily="sans-serif" fontSize={13}>
+          <text
+            x={textX}
+            y={textY}
+            dominantBaseline="middle"
+            fontFamily="sans-serif"
+            fontSize={13}
+            {...textProps}
+          >
             {legendEntry}
           </text>
         </g>

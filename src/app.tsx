@@ -1,5 +1,7 @@
+import { useControls } from "leva";
+import { Legend } from "./legend";
 import WindRose from "./react-windrose";
-import { cardinalDirections, defaultColorScheme } from "./util";
+import { cardinalDirections, blueColorScheme } from "./util";
 
 export const defaultBins = ["0-1", "1-2", "2-3", "3-4", "4-5"] as const;
 
@@ -41,16 +43,7 @@ export default function App() {
     <main>
       <section>
         <h2>default</h2>
-        <WindRose
-          data={testData}
-          bins={defaultBins}
-          width={600}
-          height={600}
-          binsTitle={"Bins"}
-          binUnits={"(m/s)"}
-          yUnits={"(m/s)"}
-          colorSchemeColors={defaultColorScheme}
-        />
+        <DefaultWindRose />
       </section>
 
       <section>
@@ -66,6 +59,94 @@ export default function App() {
   );
 }
 
+function DefaultWindRose() {
+  const { maxY, padAngle, innerRadius, colorScheme, tickCount } = useControls({
+    maxY: 20,
+    padAngle: {
+      value: 0.05,
+      min: 0,
+      max: 0.3,
+    },
+    innerRadius: {
+      value: 20,
+      min: 0,
+      max: 100,
+    },
+    colorScheme: {
+      value: "Default",
+      options: [[
+        "Default",
+        blueColorScheme,
+      ], [
+        "Viridis",
+        viridisColorScheme,
+      ], [
+        "Greys",
+        greys,
+      ]],
+    },
+    tickCount: {
+      value: 5,
+      step: 1,
+      min: 1,
+      max: 20,
+    },
+  });
+
+  return (
+    <WindRose
+      data={testData}
+      bins={defaultBins}
+      width={600}
+      height={600}
+      yUnits={"(m/s)"}
+      colorScheme={blueColorScheme}
+      // maxY={maxY}
+      innerRadius={innerRadius}
+      padAngle={padAngle}
+      tickCount={tickCount}
+    >
+      <Legend
+        bins={defaultBins}
+        rectWidth={42}
+        textX={42 / 2}
+        textProps={{
+          textAnchor: "middle",
+          fontSize: 16,
+        }}
+        colorScheme={blueColorScheme}
+        transform={`translate(200,-275)`}
+      >
+        <text
+          textDecoration="underline"
+          textAnchor="end"
+          transform={`translate(40,-10)`}
+        >
+          Wind velocity (m/s)
+        </text>
+      </Legend>
+    </WindRose>
+  );
+}
+
+const viridisColorScheme =  [
+  "#440154",
+  "#414487",
+  "#2a788e",
+  "#22a884",
+  "#7ad151",
+  "#fde725",
+]
+
+const greys = [
+  "#f7f7f7",
+  "#d9d9d9",
+  "#bdbdbd",
+  "#969696",
+  "#636363",
+  "#252525",
+]
+
 function FourDirectionWindRose() {
   const testData = makeTableData({
     bins: defaultBins,
@@ -73,7 +154,13 @@ function FourDirectionWindRose() {
   });
 
   return (
-    <WindRose data={testData} bins={defaultBins} width={600} height={600} colorScheme={["#440154", "#414487", "#2a788e", "#22a884", "#7ad151", "#fde725"]} />
+    <WindRose
+      data={testData}
+      bins={defaultBins}
+      width={600}
+      height={600}
+      colorScheme={viridisColorScheme}
+    />
   );
 }
 
@@ -84,6 +171,12 @@ function EightDirectionWindRose() {
   });
 
   return (
-    <WindRose data={testData} bins={defaultBins} width={600} height={600} colorScheme={["#f7f7f7", "#d9d9d9", "#bdbdbd", "#969696", "#636363", "#252525"]} />
+    <WindRose
+      data={testData}
+      bins={defaultBins}
+      width={600}
+      height={600}
+      colorScheme={greys}
+    />
   );
 }

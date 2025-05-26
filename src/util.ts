@@ -36,7 +36,8 @@ export const cardinalDirections = [
 
 export const TURN = 360;
 
-export const defaultColorScheme = [
+// d3.schemeBlues[9]
+export const blueColorScheme = [
   "#f7fbff",
   "#deebf7",
   "#c6dbef",
@@ -46,4 +47,4 @@ export const defaultColorScheme = [
   "#2171b5",
   "#08519c",
   "#08306b",
-]; // d3.schemeBlues[9]
+]; 

@@ -3,16 +3,17 @@ import { arc, type SeriesPoint, stack } from "d3-shape";
 import { useMemo } from "react";
 import type { WindroseDataPoint } from "./types";
 import { radians, TURN } from "./util";
+import { max } from "d3-array";
 
 type UseWindRose = {
   directions: string[];
   bins: Array<string> | ReadonlyArray<string>;
   data: Array<WindroseDataPoint<string, string>>;
-  maxY: number;
   innerRadius: number;
   outerRadius: number;
   colorScheme: ReadonlyArray<string>;
   padAngle: number;
+  maxY?: number;
 };
 
 export function useWindRose({
@@ -23,9 +24,9 @@ export function useWindRose({
   directions,
   colorScheme,
   padAngle,
-  maxY,
+  maxY = max(data, (d) => d.total) ?? 0,
 }: UseWindRose) {
-  // the x scale is for the position of the bars along the circle, one full turn
+  // An angular x-scale
   const xScale = useMemo(
     () =>
       scaleBand()
@@ -35,13 +36,12 @@ export function useWindRose({
     [directions]
   );
 
+  // A radial y-scale maintains area proportionality of radial bars
   const yScale = useMemo(() => {
     return scaleLinear().domain([0, maxY]).range([innerRadius, outerRadius]);
   }, [innerRadius, outerRadius, maxY]);
 
-  const colorScale = scaleOrdinal<string>()
-    .domain(bins)
-    .range(colorScheme);
+  const colorScale = scaleOrdinal<string>().domain(bins).range(colorScheme);
 
   const arcGenerator = useMemo(
     () =>
@@ -56,11 +56,12 @@ export function useWindRose({
   );
 
   const stackedData = useMemo(
-    () =>
-      stack<WindroseDataPoint<string, string>, string>()
-        .keys(bins)(data),
+    () => stack<WindroseDataPoint<string, string>, string>().keys(bins)(data),
     [data, bins]
   );
+
+  const angleStep = TURN / data.length;
+  const angleOffset = -angleStep / 2;
 
   return {
     xScale,
@@ -68,7 +69,7 @@ export function useWindRose({
     colorScale,
     arcGenerator,
     stackedData,
-    yLineStep: TURN / data.length,
-    angleOffset: -(TURN / data.length) / 2,
+    angleStep,
+    angleOffset,
   };
 }
