@@ -5,10 +5,13 @@ import { useMemo } from "react";
 import type { WindroseDataPoint } from "./types.js";
 import { radians, TURN } from "./util.js";
 
-type UseWindRose = {
+type UseWindRose<
+  TBins extends ReadonlyArray<string> = Array<string>,
+  TDirections extends ReadonlyArray<string> = Array<string>,
+> = {
   directions: string[];
-  bins: Array<string> | ReadonlyArray<string>;
-  data: Array<WindroseDataPoint<string, string>>;
+  bins: TBins;
+  data: Array<WindroseDataPoint<TBins[number], TDirections[number]>>;
   innerRadius: number;
   outerRadius: number;
   colorScheme: ReadonlyArray<string>;
@@ -16,7 +19,10 @@ type UseWindRose = {
   maxY?: number;
 };
 
-export function useWindRose({
+export function useWindRose<
+  TBins extends ReadonlyArray<string> = Array<string>,
+  TDirections extends ReadonlyArray<string> = Array<string>,
+>({
   data,
   bins,
   innerRadius,
@@ -25,7 +31,7 @@ export function useWindRose({
   colorScheme,
   padAngle,
   maxY = max(data, (d) => d.total) ?? 0,
-}: UseWindRose) {
+}: UseWindRose<TBins, TDirections>) {
   // An angular x-scale
   const xScale = useMemo(
     () =>
@@ -41,11 +47,14 @@ export function useWindRose({
     return scaleLinear().domain([0, maxY]).range([innerRadius, outerRadius]);
   }, [innerRadius, outerRadius, maxY]);
 
-  const colorScale = scaleOrdinal<string>().domain(bins).range(colorScheme);
+  const colorScale = useMemo(
+    () => scaleOrdinal<string>().domain(bins).range(colorScheme),
+    [bins, colorScheme],
+  );
 
   const arcGenerator = useMemo(
     () =>
-      arc<SeriesPoint<WindroseDataPoint<string, string>>>()
+      arc<SeriesPoint<{ direction: string }>>()
         .startAngle((d) => xScale(d.data.direction)!)
         .endAngle((d) => xScale(d.data.direction)! + xScale.bandwidth())
         .innerRadius((d) => yScale(d[0]))
@@ -56,7 +65,11 @@ export function useWindRose({
   );
 
   const stackedData = useMemo(
-    () => stack<WindroseDataPoint<string, string>, string>().keys(bins)(data),
+    () =>
+      stack<
+        WindroseDataPoint<TBins[number], TDirections[number]>,
+        TBins[number]
+      >().keys(bins)(data),
     [data, bins],
   );
 

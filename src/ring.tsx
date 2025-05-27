@@ -1,13 +1,11 @@
 import type { Arc, Series, SeriesPoint } from "d3-shape";
 import type { SVGProps } from "react";
-import type { WindroseDataPoint } from "./types.js";
 
 export interface RingProps extends SVGProps<SVGGElement> {
-  element: Series<WindroseDataPoint<string, string>, string>;
+  element: Series<{ direction: string }, string>;
   angleOffset: number;
   fill: string;
-  arcGenerator: Arc<unknown, SeriesPoint<WindroseDataPoint<string, string>>>;
-  name: string;
+  arcGenerator: Arc<unknown, SeriesPoint<{ direction: string }>>;
 }
 
 export function Ring({
@@ -15,11 +13,10 @@ export function Ring({
   angleOffset,
   fill,
   arcGenerator,
-  name,
   ...props
 }: RingProps) {
   return (
-    <g name={`ring-bin-${name}`} fill={fill} {...props}>
+    <g name={`ring-bin-${element.key}`} fill={fill} {...props}>
       {element.map((point) => {
         const path = arcGenerator(point);
         if (!path) {
@@ -34,7 +31,7 @@ export function Ring({
             transform={`rotate(${angleOffset})`}
           >
             <title>
-              {point.data.direction}: {name}
+              {point.data.direction}: {element.key}
             </title>
           </path>
         );

@@ -1,7 +1,7 @@
 import { useMemo, type ReactNode, type SVGProps } from "react";
-import { RadialLines, Tick } from "./ticks-radial-lines.js";
 import { DirectionLabels } from "./labels.js";
 import { Ring } from "./ring.js";
+import { RadialLines, Tick } from "./ticks-radial-lines.js";
 import type { WindroseDataPoint } from "./types.js";
 import { useWindRose } from "./use-windrose.js";
 import { blueColorScheme, sumRow } from "./util.js";
@@ -86,7 +86,6 @@ export function WindRose<
           <Ring
             key={element.key}
             element={element}
-            name={element.key}
             angleOffset={angleOffset}
             fill={colorScale(element.key)}
             arcGenerator={arcGenerator}
