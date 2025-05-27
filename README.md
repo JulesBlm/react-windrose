@@ -36,7 +36,7 @@ const cardinalDirections = [
   "WNW",
   "NW",
   "NNW",
-]
+];
 
 // Define your data
 const data = [

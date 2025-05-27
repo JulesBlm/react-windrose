@@ -2,14 +2,14 @@ export type BinsPoint<TBinKeys extends string> = {
   [key in TBinKeys]: number;
 };
 
-export type DefaultWindroseProps<TDirection extends string = string> = {
+export type DefaultWindroseProps<TDirection = string> = {
   direction: TDirection;
   total: number;
 };
 
 export type WindroseDataPoint<
   TBinKeys extends string,
-  TDirection extends string = string,
+  TDirection = string,
 > = Prettify<BinsPoint<TBinKeys> & DefaultWindroseProps<TDirection>>;
 
 type Prettify<T> = {

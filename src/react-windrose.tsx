@@ -10,7 +10,7 @@ const directionAccessor = (d: { direction: string }) => d.direction;
 
 export interface WindRoseProps<
   TBins extends ReadonlyArray<string> = Array<string>,
-  TDirections extends ReadonlyArray<string> = Array<string>,
+  TDirections extends ReadonlyArray<unknown> = Array<string>,
 > extends SVGProps<SVGSVGElement> {
   width: number;
   height: number;
@@ -44,7 +44,6 @@ export function WindRose<
   children,
   ...props
 }: WindRoseProps<TBins, TDirections>) {
-
   const directions = data.map(directionAccessor);
 
   const dataWithRowTotals = useMemo(
