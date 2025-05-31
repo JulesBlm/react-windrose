@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug SVG Rendering</title>
+    <style>
+        svg { border: 1px solid red; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h1>Debug SVG Test</h1>
+    
+    <!-- Test basic SVG with viewBox -->
+    <h2>Basic SVG with viewBox</h2>
+    <svg viewBox="-200, -200, 400, 400" width="400" height="400" style="border: 1px solid blue;">
+        <circle cx="0" cy="0" r="50" fill="red" />
+        <text x="0" y="0" text-anchor="middle" fill="black">Test</text>
+    </svg>
+    
+    <!-- Test without height -->
+    <h2>SVG without height attribute</h2>
+    <svg viewBox="-200, -200, 400, 400" width="400" style="border: 1px solid green;">
+        <circle cx="0" cy="0" r="50" fill="blue" />
+        <text x="0" y="0" text-anchor="middle" fill="black">No Height</text>
+    </svg>
+    
+    <!-- Test light colors -->
+    <h2>Light Colors Test</h2>
+    <svg viewBox="-200, -200, 400, 400" width="400" height="400" style="border: 1px solid orange;">
+        <circle cx="-50" cy="0" r="30" fill="#f7fbff" stroke="black" stroke-width="2" />
+        <circle cx="50" cy="0" r="30" fill="#08306b" />
+        <text x="0" y="100" text-anchor="middle" fill="black">Light vs Dark</text>
+    </svg>
+</body>
+</html>

@@ -1,26 +1,15 @@
-import { sum } from "d3-array";
-
-export function sumRow<DataType extends Record<string, unknown>>(
-  row: DataType,
-) {
-  const rowValues = Object.entries(row)
-    .filter(([k]) => k !== "direction")
-    .map(([_k, v]) => Number(v));
-  const rowTowal = sum(rowValues);
-
-  return rowTowal;
-}
-
 export function radians(degrees: number) {
   return (degrees * Math.PI) / 180;
 }
 
+export const fluidFontSize = (scale: number) => (outerRadius: number) =>
+  Math.max(8, Math.min(18, outerRadius * scale));
+
+/** One full turn in degrees */
 export const TURN = 360;
 
-// d3.schemeBlues[9]
+// d3.schemeBlues[9] - using darker colors for better visibility
 export const blueColorScheme = [
-  "#f7fbff",
-  "#deebf7",
   "#c6dbef",
   "#9ecae1",
   "#6baed6",
@@ -28,4 +17,25 @@ export const blueColorScheme = [
   "#2171b5",
   "#08519c",
   "#08306b",
+  "#0056b3",
+  "#003d82",
 ];
+
+export function sumRow<TBins extends ReadonlyArray<string>>(
+  row: Record<TBins[number], unknown> & Record<string, unknown>,
+  bins: TBins,
+): number {
+  let sum = 0;
+  for (const bin of bins) {
+    const value = row[bin as TBins[number]];
+    if (typeof value === "number") {
+      sum += value;
+    } else if (typeof value === "string") {
+      const numValue = Number(value);
+      if (!isNaN(numValue)) {
+        sum += numValue;
+      }
+    }
+  }
+  return sum;
+}

@@ -14,7 +14,7 @@ describe("useWindRose hook", () => {
   const defaultProps = {
     data: mockData,
     bins: ["bin1", "bin2"] as const,
-    directions: ["N", "NE", "E", "SE"],
+    dataDirections: ["N", "NE", "E", "SE"],
     innerRadius: 20,
     outerRadius: 100,
     colorScheme: blueColorScheme,
@@ -24,7 +24,7 @@ describe("useWindRose hook", () => {
   it("should return all required properties", () => {
     const { result } = renderHook(() => useWindRose(defaultProps));
 
-    expect(result.current).toHaveProperty("xScale");
+    expect(result.current).toHaveProperty("labelXScale");
     expect(result.current).toHaveProperty("yScale");
     expect(result.current).toHaveProperty("colorScale");
     expect(result.current).toHaveProperty("arcGenerator");
@@ -43,8 +43,8 @@ describe("useWindRose hook", () => {
   it("should create scales with correct domains and ranges", () => {
     const { result } = renderHook(() => useWindRose(defaultProps));
 
-    // Test xScale domain
-    expect(result.current.xScale.domain()).toEqual(["N", "NE", "E", "SE"]);
+    // Test labelXScale domain (should use dataDirections when labelDirections not provided)
+    expect(result.current.labelXScale.domain()).toEqual(["N", "NE", "E", "SE"]);
 
     // Test yScale domain
     expect(result.current.yScale.domain()).toEqual([0, 19]); // max total is 19
@@ -62,7 +62,7 @@ describe("useWindRose hook", () => {
   });
 
   it("should handle empty data", () => {
-    const emptyProps = { ...defaultProps, data: [] };
+    const emptyProps = { ...defaultProps, data: [], dataDirections: [] };
     const { result } = renderHook(() => useWindRose(emptyProps));
 
     expect(result.current.angleStep).toBe(Infinity);
@@ -74,7 +74,7 @@ describe("useWindRose hook", () => {
       initialProps: defaultProps,
     });
 
-    const initialXScale = result.current.xScale;
+    const initialLabelXScale = result.current.labelXScale;
     const initialYScale = result.current.yScale;
     const initialColorScale = result.current.colorScale;
 
@@ -86,8 +86,8 @@ describe("useWindRose hook", () => {
 
     rerender({ ...defaultProps, data: newData });
 
-    // xScale and colorScale should be the same (same directions/bins)
-    expect(result.current.xScale).toBe(initialXScale);
+    // labelXScale and colorScale should be the same (same dataDirections/bins)
+    expect(result.current.labelXScale).toBe(initialLabelXScale);
     expect(result.current.colorScale).toBe(initialColorScale);
 
     // yScale should change due to different maxY
@@ -104,7 +104,22 @@ describe("useWindRose hook", () => {
     // Check first bin data
     const firstBin = result.current.stackedData[0]!;
     expect(firstBin.key).toBe("bin1");
-    expect(firstBin[0][0]).toBe(0); // start of first segment
-    expect(firstBin[0][1]).toBe(10); // end of first segment (bin1 value)
+    expect(firstBin[0]![0]).toBe(0); // start of first segment
+    expect(firstBin[0]![1]).toBe(10); // end of first segment (bin1 value)
+  });
+
+  it("should handle separate labelDirections", () => {
+    const propsWithLabels = { 
+      ...defaultProps, 
+      labelDirections: ["N", "E"] 
+    };
+    const { result } = renderHook(() => useWindRose(propsWithLabels));
+
+    // labelXScale should use the provided labelDirections
+    expect(result.current.labelXScale.domain()).toEqual(["N", "E"]);
+    
+    // angleStep should be calculated based on labelDirections length
+    expect(result.current.angleStep).toBe(360 / 2); // 180 degrees
+    expect(result.current.angleOffset).toBe(-90); // -angleStep / 2
   });
 });

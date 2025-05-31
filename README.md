@@ -1,10 +1,10 @@
 # React Windrose
 
-A customizable React component library for creating wind rose diagrams. Wind rose charts display the distribution of wind speed and direction, commonly used in meteorology and environmental analysis.
+`react-windrose` is a React component library for creating wind rose diagrams. Wind rose charts display the distribution of wind speed and direction, commonly used in meteorology and environmental analysis.
 
-Built on top of D3.js for calculations and scales while using React for rendering SVG elements, this library provides a flexible way to create interactive wind rose diagrams.
+`react-windrose` is built on top of D3.js for calculations and scales and uses React for rendering SVG elements. It provides a flexible way to create interactive wind rose diagrams.
 
-<!-- TODO example windrose -->
+![windrose chart made with react-windrose](https://raw.githubusercontent.com/JulesBlm/react-windrose/main/windrose.svg)
 
 ## Installation
 
@@ -14,39 +14,46 @@ npm install react-windrose
 
 ## Usage
 
+Use the `<WindRose>` component for a good looking wind rose chart out-of-the-box.
+It is meant to be a more-than-enough-for-most. If you need more control see [the customization](#customization) section for creating more custom wind rose diagrams by composing components.
+
 ### Basic Example
 
 ```jsx
 import { WindRose } from "react-windrose";
+```
 
-const cardinalDirections = [
-  "N",
-  "NNE",
-  "NE",
-  "ENE",
-  "E",
-  "ESE",
-  "SE",
-  "SSE",
-  "S",
-  "SSW",
-  "SW",
-  "WSW",
-  "W",
-  "WNW",
-  "NW",
-  "NNW",
-];
+Data is an array of objects. Each object should contain a `direction` (a cardinal direction like "North" or a degrees like `"180°"`) and values for bins
 
-// Define your data
+<details>
+<summary>Type for data</summary>
+
+```typescript
+type WindroseDataPoint<
+  TBinKeys extends string,
+  TDirection extends string = string,
+> = {
+  direction: TDirection; // Wind direction (e.g., "N", "NE")
+  total: number; // Calculated total of all bin values
+  [key: TBinKeys]: number; // Bin values (e.g., "0-1": 3, "1-2": 5)
+};
+```
+
+</details>
+
+```js
 const data = [
-  { direction: "N", "0-1": 2, "1-2": 3, "2-3": 1, "3-4": 0, "4-5": 0 },
-  { direction: "NE", "0-1": 1, "1-2": 2, "2-3": 3, "3-4": 1, "4-5": 0 },
-  // ... more directions
+  { direction: "North", low: 2, medium: 3, high: 1 },
+  { direction: "East", low: 6, medium: 1, high: 0 },
+  { direction: "South", low: 5, medium: 1, high: 3 },
+  { direction: "West", low: 1, medium: 1, high: 2 },
 ];
+```
 
-// Define your bins (speed ranges)
-const bins = ["0-1", "1-2", "2-3", "3-4", "4-5"];
+The `bins` array passed to `<WindRose>` should contain the keys of the bins in the objects in `data`.
+
+```jsx
+const bins = ["low", "medium", "high"];
 
 const colorScheme = ["#f7fbff", "#deebf7", "#c6dbef", "#9ecae1", "#6baed6"];
 
@@ -64,15 +71,18 @@ function MyWindRose() {
 }
 ```
 
+**Note:** The `total` is automatically calculated by the component using the `sumRow` utility function and need not be provided in your input data to `<WindRose>`.
+
 ### With Legend
 
+A component for adding a legend to the wind rose diagram.
+`react-windrose` comes with a `Legend` (vertical by default) and `HorizontalLegend`.
+Note that you have to add a title yourself as `children`.
+
 ```jsx
-import { WindRose } from "react-windrose";
-import { Legend } from "react-windrose/legend";
+import { WindRose, VerticalLegend } from "react-windrose";
 
-const colorScheme = ["#f7fbff", "#deebf7", "#c6dbef", "#9ecae1", "#6baed6"];
-
-function MyWindRoseWithLegend() {
+function WindRoseWithVerticalLegend() {
   return (
     <WindRose
       data={data}
@@ -82,7 +92,7 @@ function MyWindRoseWithLegend() {
       yUnits="m/s"
       colorScheme={colorScheme}
     >
-      <Legend
+      <VerticalLegend
         bins={bins}
         colorScheme={colorScheme}
         transform="translate(250,100)"
@@ -94,82 +104,13 @@ function MyWindRoseWithLegend() {
         >
           Wind Speed (m/s)
         </text>
-      </Legend>
+      </VerticalLegend>
     </WindRose>
   );
 }
 ```
 
-## API Reference
-
-### `<WindRose>` Component
-
-The main component for rendering wind rose diagrams. This component is meant to be a more-than-enough-for-most. If you need more control see [the customization](#customization) section for creating more custom wind rose diagrams.
-
-#### Props
-
-| Prop          | Type                          | Required | Default         | Description                                                                                                                          |
-| ------------- | ----------------------------- | -------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `width`       | number                        | Yes      | -               | Width of the chart in pixels                                                                                                         |
-| `height`      | number                        | Yes      | -               | Height of the chart in pixels                                                                                                        |
-| `data`        | Array<WindroseDataPoint>      | Yes      | -               | Array of data points with direction and values for each bin                                                                          |
-| `bins`        | Array<string>                 | Yes      | -               | Array of bin names (speed ranges)                                                                                                    |
-| `yUnits`      | string                        | Yes      | -               | Units for the y-axis (e.g., "m/s")                                                                                                   |
-| `colorScheme` | ReadonlyArray<string>         | No       | blueColorScheme | Array of colors for the bins (defaults to blue color scheme)                                                                         |
-| `innerRadius` | number                        | No       | 20              | Inner radius of the wind rose                                                                                                        |
-| `tickCount`   | number                        | No       | 4               | Number of ticks on the y-axis. The specified count is only a hint; the scale may return more or fewer values depending on the domain |
-| `padAngle`    | number                        | No       | 0.05            | Padding angle between segments                                                                                                       |
-| `maxY`        | number                        | No       | Auto            | Maximum value for the y-axis scale (defaults to the maximum data total)                                                              |
-| `children`    | ReactNode                     | No       | -               | Additional components (e.g., Legend)                                                                                                 |
-| `...props`    | React.SVGProps<SVGSVGElement> | No       | -               | All other SVG props are passed through to the root SVG element                                                                       |
-
-### `<Legend>` Component
-
-A component for adding a legend to the wind rose diagram.
-
-#### Props
-
-| Prop          | Type                                   | Required | Default       | Description                              |
-| ------------- | -------------------------------------- | -------- | ------------- | ---------------------------------------- |
-| `bins`        | Array<string>                          | Yes      | -             | Array of bin names                       |
-| `colorScheme` | Array<string> \| ReadonlyArray<string> | Yes      | -             | Array of colors for the bins             |
-| `rectWidth`   | number                                 | No       | 18            | Width of the legend rectangles           |
-| `rectHeight`  | number                                 | No       | rectWidth     | Height of the legend rectangles          |
-| `spacingY`    | number                                 | No       | rectWidth + 2 | Vertical spacing between legend items    |
-| `textX`       | number                                 | No       | rectWidth + 4 | X position of text relative to rectangle |
-| `textY`       | number                                 | No       | rectWidth / 2 | Y position of text relative to rectangle |
-| `rectProps`   | React.SVGProps<SVGRectElement>         | No       | -             | Additional props for rectangle elements  |
-| `textProps`   | React.SVGProps<SVGTextElement>         | No       | -             | Additional props for text elements       |
-| `children`    | ReactNode                              | No       | -             | Custom content (typically legend title)  |
-
-### Data Format
-
-The `data` prop should be an array of objects with the following structure:
-
-```typescript
-type WindroseDataPoint<
-  TBinKeys extends string,
-  TDirection extends string = string,
-> = {
-  direction: TDirection; // Wind direction (e.g., "N", "NE")
-  total: number; // Auto-calculated total of all bin values
-  [key: TBinKeys]: number; // Bin values (e.g., "0-1": 3, "1-2": 5)
-};
-```
-
-**Note:** The `total` field is automatically calculated by the component using the `sumRow` utility function and should not be provided in your input data.
-
-## Customization
-
-The `WindRose` component can be configured in various ways:
-
-- Change colors with the `colorScheme` prop
-- Adjust the size with `width` and `height` props
-- Modify the inner radius with `innerRadius`
-- Change the number of y-axis ticks with `tickCount`
-- Adjust padding between segments with `padAngle`
-
-## Advanced: Building Custom Wind Roses
+## Building Custom Wind Roses
 
 You can create custom wind rose diagrams by using the `useWindRose` hook and composing the individual components. This gives you complete control over the appearance of your wind rose.
 
@@ -188,11 +129,11 @@ const {
   angleOffset, // Angle offset for proper orientation (-angleStep / 2)
 } = useWindRose({
   data, // Your data with row totals (WindroseDataPoint[])
-  bins, // Array of bin names (Array<string> | ReadonlyArray<string>)
+  bins, // Array of bin names (Array<string>
   innerRadius, // Inner radius of the wind rose (number)
   outerRadius, // Outer radius of the wind rose (number)
   directions, // Array of direction values (string[])
-  colorScheme, // Color scheme for the bins (ReadonlyArray<string>)
+  colorScheme, // Color scheme for the bins (Array<string>)
   padAngle, // Padding angle between segments (number)
   maxY, // Optional maximum y value for scale (number, defaults to max total in data)
 });
@@ -203,7 +144,9 @@ const {
 - `Ring`: Renders a single segment ring for a specific bin
 - `RadialLines`: Renders the spokes of the wind rose
 - `DirectionLabels`: Renders the direction labels around the wind rose
-- `Tick`: Renders a single tick mark on the y-axis
+- `Tick`: Renders a value marker on the radial scale, consisting of a dashed circle (`TickCircle`) and its value label (`TickLabel`)
+  - `TickCircle`: Renders the dashed circle at a specific radius
+  - `TickLabel`: Renders the value label at the same radius as its circle
 
 ### Example: Custom Wind Rose
 
@@ -215,13 +158,13 @@ import {
   DirectionLabels,
   Tick,
   useWindRose,
+  sumRow,
 } from "react-windrose";
-import { sumRow } from "react-windrose/util";
 
 function CustomWindRose({ data, bins, width, height, colorScheme }) {
   const outerRadius = Math.min(width, height) / 2.5;
   const innerRadius = 20;
-  const directions = data.map((d) => d.direction);
+  const dataDirections = data.map((d) => d.direction);
 
   // Calculate row totals
   const dataWithRowTotals = useMemo(
@@ -243,7 +186,7 @@ function CustomWindRose({ data, bins, width, height, colorScheme }) {
     innerRadius,
     outerRadius,
     colorScheme,
-    directions,
+    dataDirections,
     bins,
     padAngle: 0.05,
   });
@@ -256,13 +199,11 @@ function CustomWindRose({ data, bins, width, height, colorScheme }) {
       width={width}
       height={height}
     >
-      {/* Render the data rings */}
       <g name="rings">
         {stackedData.map((element) => (
           <Ring
             key={element.key}
             element={element}
-            name={element.key}
             angleOffset={angleOffset}
             fill={colorScale(element.key)}
             arcGenerator={arcGenerator}
@@ -273,7 +214,7 @@ function CustomWindRose({ data, bins, width, height, colorScheme }) {
       <DirectionLabels
         xScale={xScale}
         angleOffset={angleOffset}
-        directions={directions}
+        directions={dataDirections}
         outerRadius={outerRadius}
         fontSize={14}
         fontWeight={500}
@@ -283,11 +224,10 @@ function CustomWindRose({ data, bins, width, height, colorScheme }) {
         angleStep={angleStep}
         innerRadius={innerRadius}
         yScale={yScale}
-        yTicks={yTicks}
+        tickCount={4}
         stroke="#888"
       />
 
-      {/* Render tick marks */}
       <g name="ticks" textAnchor="middle" fontSize={14}>
         {yTicks.map((tick) => (
           <Tick
@@ -300,7 +240,6 @@ function CustomWindRose({ data, bins, width, height, colorScheme }) {
         ))}
       </g>
 
-      {/* Custom elements */}
       <text y={-outerRadius - 10} textAnchor="middle" fontWeight="bold">
         Custom Wind Rose
       </text>
@@ -311,7 +250,7 @@ function CustomWindRose({ data, bins, width, height, colorScheme }) {
 
 This approach allows you to create highly customized wind rose visualizations while still leveraging the core functionality of the library.
 
-<!-- TODO add custom examples -->
+See the Storybook for more examples
 
 ## License
 

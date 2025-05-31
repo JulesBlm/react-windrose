@@ -26,7 +26,7 @@ describe("WindRose component", () => {
     const svg = document.querySelector('svg[name="windrose"]');
     expect(svg).toBeDefined();
     expect(svg?.getAttribute("width")).toBe("400");
-    expect(svg?.getAttribute("viewBox")).toBe("-200, -200, 400, 400");
+    expect(svg?.getAttribute("viewBox")).toBe("-200 -200 400 400");
   });
 
   it("should render rings for each bin", () => {

@@ -8,6 +8,7 @@ export default defineConfig({
       provider: "playwright",
       // Playwright will be installed automatically
       headless: true,
+      screenshotFailures: false,
     },
     // Test files
     include: ["src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],

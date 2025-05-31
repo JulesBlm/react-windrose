@@ -3,6 +3,7 @@ import { blueColorScheme, radians, sumRow, TURN } from "./util.js";
 
 describe("util functions", () => {
   describe("sumRow", () => {
+    const bins = ["bin1", "bin2", "bin3"];
     it("should sum all numeric values except direction", () => {
       const row = {
         direction: "N",
@@ -11,7 +12,7 @@ describe("util functions", () => {
         bin3: 5,
       };
 
-      expect(sumRow(row)).toBe(35);
+      expect(sumRow(row, bins)).toBe(35);
     });
 
     it("should handle string numbers", () => {
@@ -21,7 +22,7 @@ describe("util functions", () => {
         bin2: "25",
       };
 
-      expect(sumRow(row)).toBe(40);
+      expect(sumRow(row, bins)).toBe(40);
     });
 
     it("should return 0 for empty bins", () => {
@@ -29,7 +30,7 @@ describe("util functions", () => {
         direction: "S",
       };
 
-      expect(sumRow(row)).toBe(0);
+      expect(sumRow(row, bins)).toBe(0);
     });
 
     it("should handle zero values", () => {
@@ -40,7 +41,7 @@ describe("util functions", () => {
         bin3: 10,
       };
 
-      expect(sumRow(row)).toBe(10);
+      expect(sumRow(row, bins)).toBe(10);
     });
   });
 
@@ -68,8 +69,8 @@ describe("util functions", () => {
 
     it("should have blue color scheme with 9 colors", () => {
       expect(blueColorScheme).toHaveLength(9);
-      expect(blueColorScheme[0]).toBe("#f7fbff");
-      expect(blueColorScheme[8]).toBe("#08306b");
+      expect(blueColorScheme[0]).toBe("#c6dbef");
+      expect(blueColorScheme[8]).toBe("#003d82");
     });
   });
 });

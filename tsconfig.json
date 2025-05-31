@@ -19,6 +19,7 @@
     "lib": ["ES2023", "dom", "dom.iterable"],
     "module": "NodeNext",
     "outDir": "dist",
+    "rootDir": "src",
     "sourceMap": true,
     "jsx": "react-jsx",
 
@@ -32,5 +33,7 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["**/demo/**", "**/*.stories.tsx", "**/*.test.ts", "**/*.test.tsx", "**/test-setup.ts"]
 }
