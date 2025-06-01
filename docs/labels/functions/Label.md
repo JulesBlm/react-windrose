@@ -8,9 +8,9 @@
 
 > **Label**(`props`): `Element`
 
-Defined in: [labels.tsx:79](https://github.com/JulesBlm/react-windrose/blob/4c90b4c4e20ea2808adde010911e8780345b3f2c/src/labels.tsx#L79)
+Defined in: [labels.tsx:79](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/labels.tsx#L79)
 
-Renders a single direction label positioned around a circular chart
+Renders a single direction label positioned around a the wind rose
 
 ## Parameters
 

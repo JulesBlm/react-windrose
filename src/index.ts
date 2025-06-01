@@ -11,8 +11,11 @@ export {
   TickCircle,
   TickLabel,
   Tick,
+  Ticks,
   type TickCircleProps,
   type TickLabelProps,
+  type TickProps,
+  type TicksProps,
 } from "./ticks.js";
 export type {
   BinsPoint,

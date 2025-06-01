@@ -8,7 +8,7 @@
 
 > **VerticalLegend**(`props`): `Element`
 
-Defined in: [legend.tsx:42](https://github.com/JulesBlm/react-windrose/blob/4c90b4c4e20ea2808adde010911e8780345b3f2c/src/legend.tsx#L42)
+Defined in: [legend.tsx:42](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/legend.tsx#L42)
 
 Renders a vertical legend for a windrose chart
 

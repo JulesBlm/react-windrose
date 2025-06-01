@@ -8,7 +8,7 @@
 
 > **Tick**(`props`): `Element`
 
-Defined in: [ticks.tsx:88](https://github.com/JulesBlm/react-windrose/blob/4c90b4c4e20ea2808adde010911e8780345b3f2c/src/ticks.tsx#L88)
+Defined in: [ticks.tsx:89](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/ticks.tsx#L89)
 
 Renders a complete tick mark with both circle and label
 

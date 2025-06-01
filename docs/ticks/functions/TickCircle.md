@@ -8,7 +8,7 @@
 
 > **TickCircle**(`props`): `Element`
 
-Defined in: [ticks.tsx:20](https://github.com/JulesBlm/react-windrose/blob/4c90b4c4e20ea2808adde010911e8780345b3f2c/src/ticks.tsx#L20)
+Defined in: [ticks.tsx:21](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/ticks.tsx#L21)
 
 Renders a single circular tick mark at a specified radius
 

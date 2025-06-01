@@ -8,7 +8,7 @@
 
 > **Ring**(`props`): `Element`
 
-Defined in: [ring.tsx:24](https://github.com/JulesBlm/react-windrose/blob/4c90b4c4e20ea2808adde010911e8780345b3f2c/src/ring.tsx#L24)
+Defined in: [ring.tsx:24](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/ring.tsx#L24)
 
 Renders a single ring of a windrose chart
 

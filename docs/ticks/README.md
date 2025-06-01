@@ -11,3 +11,4 @@
 - [Tick](functions/Tick.md)
 - [TickCircle](functions/TickCircle.md)
 - [TickLabel](functions/TickLabel.md)
+- [Ticks](functions/Ticks.md)

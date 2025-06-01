@@ -1,8 +1,8 @@
 import { useMemo, type ReactNode, type SVGProps } from "react";
 import { DirectionLabels } from "./labels.js";
-import { Ring } from "./ring.js";
 import { RadialLines } from "./radial-lines.js";
-import { Tick } from "./ticks.js";
+import { Ring } from "./ring.js";
+import { Ticks } from "./ticks.js";
 import type { WindroseDataPoint } from "./types.js";
 import { useWindRose } from "./use-windrose.js";
 import { blueColorScheme, fluidFontSize, sumRow } from "./util.js";
@@ -63,7 +63,7 @@ export function WindRose<
   height = 400,
   colorScheme = blueColorScheme,
   labelDirections,
-  innerRadius = 20,
+  innerRadius = Math.min(width, height) / 12.5,
   outerRadius = Math.min(width, height) / 2.5,
   tickCount = 4,
   padAngle,
@@ -100,8 +100,6 @@ export function WindRose<
     maxY,
   });
 
-  const yTicks = yScale.ticks(tickCount);
-
   return (
     <svg
       viewBox={`${-width / 2} ${-height / 2} ${width} ${height}`}
@@ -137,15 +135,11 @@ export function WindRose<
         tickCount={tickCount}
       />
 
-      <g
-        name="ticks"
-        textAnchor="middle"
-        fontSize={fluidFontSize(0.12)(outerRadius)}
-      >
-        {yTicks.map((tick) => (
-          <Tick key={tick} tick={tick} yScale={yScale} />
-        ))}
-      </g>
+      <Ticks
+        yScale={yScale}
+        tickCount={tickCount}
+        outerRadius={outerRadius}
+      />
 
       {yUnits ? (
         <text

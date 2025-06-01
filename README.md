@@ -152,10 +152,12 @@ const {
 
 - `Ring`: Renders a single segment ring for a specific bin
 - `RadialLines`: Renders the spokes of the wind rose
-- `DirectionLabels`: Renders the direction labels around the wind rose
-- `Tick`: Renders a value marker on the radial scale, consisting of a dashed circle (`TickCircle`) and its value label (`TickLabel`)
-  - `TickCircle`: Renders the dashed circle at a specific radius
-  - `TickLabel`: Renders the value label at the same radius as its circle
+- `DirectionLabels`: Renders the direction `Label`s around the wind rose
+  - `Label`: Renders a single direction label positioned around a the wind rose
+- `Ticks`: Renders a group of `Tick` marks with their labels
+  - `Tick`: Renders a tick mark on the y-scale, consisting of a dashed circle (`TickCircle`) and its value label (`TickLabel`)
+    - `TickCircle`: Renders the dashed circle at a specific radius
+    - `TickLabel`: Renders the value label at the same radius as its circle
 
 ### Example: Custom Wind Rose
 

@@ -8,7 +8,7 @@
 
 > **DirectionLabels**(`props`): `Element`
 
-Defined in: [labels.tsx:23](https://github.com/JulesBlm/react-windrose/blob/4c90b4c4e20ea2808adde010911e8780345b3f2c/src/labels.tsx#L23)
+Defined in: [labels.tsx:23](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/labels.tsx#L23)
 
 Renders a group of direction labels around a circular chart
 

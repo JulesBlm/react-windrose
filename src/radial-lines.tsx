@@ -42,6 +42,7 @@ export function RadialLines({
       strokeDasharray="1,4"
       {...props}
     >
+      {/* -90 is the top (North) */}
       {range(-90, 270, angleStep).map((rotation) => (
         <line
           key={rotation}

@@ -8,7 +8,7 @@
 
 > **TickLabel**(`props`): `Element`
 
-Defined in: [ticks.tsx:49](https://github.com/JulesBlm/react-windrose/blob/4c90b4c4e20ea2808adde010911e8780345b3f2c/src/ticks.tsx#L49)
+Defined in: [ticks.tsx:50](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/ticks.tsx#L50)
 
 Renders a single tick value label at a specified radius
 

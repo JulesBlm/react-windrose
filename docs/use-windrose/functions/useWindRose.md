@@ -8,7 +8,7 @@
 
 > **useWindRose**\<`TBins`, `TDirections`\>(`props`): `object`
 
-Defined in: [use-windrose.ts:55](https://github.com/JulesBlm/react-windrose/blob/4c90b4c4e20ea2808adde010911e8780345b3f2c/src/use-windrose.ts#L55)
+Defined in: [use-windrose.ts:55](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/use-windrose.ts#L55)
 
 A React hook that generates the necessary scales and data transformations for a wind rose chart.
 This hook handles the creation of angular scales for directions, radial scales for values,

@@ -72,7 +72,7 @@ export interface LabelProps {
 }
 
 /**
- * Renders a single direction label positioned around a circular chart
+ * Renders a single direction label positioned around a the wind rose
  * @param props - The component props
  * @returns An SVG text element positioned at the correct angle and distance
  */
