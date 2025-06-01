@@ -1,0 +1,68 @@
+{
+  "name": "react-windrose",
+  "version": "1.0.0",
+  "description": "React component library for creating wind rose diagrams",
+  "keywords": [
+    "windrose",
+    "react",
+    "compass",
+    "chart",
+    "diagram"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "ci": "npm run build && npm run check-format && npm run check-exports",
+    "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
+    "doc": "typedoc --plugin typedoc-plugin-markdown --readme none --excludePrivate --excludeProtected --includeVersion --excludeExternals src/react-windrose.tsx src/use-windrose.ts src/labels.tsx src/ticks.tsx src/radial-lines.tsx src/ring.tsx src/legend.tsx",
+    "format": "prettier --write .",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc",
+    "lint": "eslint .",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:ui": "vitest --ui"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "bugs": {
+    "url": "https://github.com/JulesBlm/react-windrose/issues"
+  },
+  "homepage": "https://github.com/JulesBlm/react-windrose#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JulesBlm/react-windrose.git"
+  },
+  "author": "Jules Blom <jules.blom@bedrock.engineer>",
+  "license": "MIT",
+  "dependencies": {
+    "d3-array": "^3.2.4",
+    "d3-scale": "^4.0.2",
+    "d3-shape": "^3.2.0"
+  },
+  "peerDependencies": {
+    "react": ">= 16",
+    "react-dom": ">= 16"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.1",
+    "@changesets/cli": "^2.29.4",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/d3-array": "^3.2.1",
+    "@types/d3-scale": "^4.0.9",
+    "@types/d3-shape": "^3.1.7",
+    "@types/react": "^19.1.5",
+    "@types/react-dom": "^19.1.5",
+    "@vitest/browser": "^3.1.4",
+    "playwright": "^1.52.0",
+    "prettier": "^3.5.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "typedoc": "^0.28.5",
+    "typedoc-plugin-markdown": "^4.6.3",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.4"
+  }
+}
