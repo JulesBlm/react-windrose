@@ -1,10 +1,15 @@
 # React Windrose
 
+[![npm version](https://badge.fury.io/js/react-windrose.svg)](https://www.npmjs.com/package/react-windrose)
+
 `react-windrose` is a React component library for creating wind rose diagrams. Wind rose charts display the distribution of wind speed and direction, commonly used in meteorology and environmental analysis.
 
 `react-windrose` is built on top of D3.js for calculations and scales and uses React for rendering SVG elements. It provides a flexible way to create interactive wind rose diagrams.
 
-![windrose chart made with react-windrose](https://raw.githubusercontent.com/JulesBlm/react-windrose/refs/heads/main/windrose.svg)
+
+![windrose chart made with react-windrose](./windrose.svg)
+
+See [the Storybook](https://julesblom.com/react-windrose?path=/docs/windrose--docs) for examples.
 
 ## Installation
 
@@ -60,9 +65,9 @@ const labelDirections = ["N", "E", "S", "W"] as const;
   colorScheme={colorScheme}
   // Number of value markers (default: 4)
   tickCount={5}
-  // Inner and outer radius (defaults calculated from width/height)
-  innerRadius={20}
-  outerRadius={200}
+  // Inner and outer radius 
+  innerRadius={20} // deafult 20
+  outerRadius={200} // default calculated from width/height
   // Custom direction labels, in case you want to show fewer direction labels than in the data
   labelDirections={labelDirections}
   // Space between segments in radians (default: 0.05)
@@ -125,6 +130,7 @@ const {
   xScale,       // D3 scale for the angular direction
   yScale,       // D3 scale for the radial values
   colorScale,   // D3 scale for the colors
+  directions    // Direction labels to display
   arcGenerator, // D3 arc generator
   stackedData,  // Stacked data for rendering
   angleStep,    // Step size for radial lines (360 / data.length)
@@ -136,6 +142,7 @@ const {
   outerRadius,  // Outer radius of the wind rose (number)
   directions,   // Array of direction values (Array<string>)
   colorScheme,  // Color scheme for the bins (Array<string>)
+  labelDirections // Optional array of direction labels to display. If not provided, all directions from data will be shown.
   padAngle,     // Padding angle between segments (number)
   maxY,         // Optional maximum y value for scale (number, defaults to max total in data)
 });
@@ -251,7 +258,7 @@ function CustomWindRose({ data, bins, width, height, colorScheme }) {
 
 This approach allows you to create highly customized wind rose visualizations while still leveraging the core functionality of the library.
 
-See the Storybook for more examples.
+See [the Storybook](https://julesblom.com/react-windrose?path=/docs/customwindrose--docs) for more examples of custom windrose charts.
 
 ## API Reference
 
