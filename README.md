@@ -7,7 +7,7 @@
 `react-windrose` is built on top of D3.js for calculations and scales and uses React for rendering SVG elements. It provides a flexible way to create interactive wind rose diagrams.
 
 
-![windrose chart made with react-windrose](./windrose.svg)
+![windrose chart made with react-windrose](./windrose.png)
 
 See [the Storybook](https://julesblom.com/react-windrose?path=/docs/windrose--docs) for examples.
 
