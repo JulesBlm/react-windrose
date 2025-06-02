@@ -1,8 +1,8 @@
-**react-windrose v1.0.0**
+**react-windrose v1.0.2**
 
 ***
 
-# react-windrose v1.0.0
+# react-windrose v1.0.2
 
 ## Modules
 

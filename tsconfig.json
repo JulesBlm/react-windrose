@@ -35,5 +35,11 @@
     "noUncheckedSideEffectImports": true
   },
   "include": ["src/**/*"],
-  "exclude": ["**/demo/**", "**/*.stories.tsx", "**/*.test.ts", "**/*.test.tsx", "**/test-setup.ts"]
+  "exclude": [
+    "**/demo/**",
+    "**/*.stories.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/test-setup.ts"
+  ]
 }

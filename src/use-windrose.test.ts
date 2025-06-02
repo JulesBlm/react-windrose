@@ -110,15 +110,15 @@ describe("useWindRose hook", () => {
   });
 
   it("should handle separate labelDirections", () => {
-    const propsWithLabels = { 
-      ...defaultProps, 
-      labelDirections: ["N", "E"] 
+    const propsWithLabels = {
+      ...defaultProps,
+      labelDirections: ["N", "E"],
     };
     const { result } = renderHook(() => useWindRose(propsWithLabels));
 
     // labelXScale should use the provided labelDirections
     expect(result.current.labelXScale.domain()).toEqual(["N", "E"]);
-    
+
     // angleStep should be calculated based on labelDirections length
     expect(result.current.angleStep).toBe(360 / 2); // 180 degrees
     expect(result.current.angleOffset).toBe(-90); // -angleStep / 2

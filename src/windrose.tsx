@@ -135,11 +135,7 @@ export function WindRose<
         tickCount={tickCount}
       />
 
-      <Ticks
-        yScale={yScale}
-        tickCount={tickCount}
-        outerRadius={outerRadius}
-      />
+      <Ticks yScale={yScale} tickCount={tickCount} outerRadius={outerRadius} />
 
       {yUnits ? (
         <text

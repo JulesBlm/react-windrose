@@ -1,4 +1,4 @@
-[**react-windrose v1.0.0**](../README.md)
+[**react-windrose v1.0.2**](../README.md)
 
 ***
 

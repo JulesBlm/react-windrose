@@ -1,4 +1,4 @@
-[**react-windrose v1.0.0**](../../README.md)
+[**react-windrose v1.0.2**](../../README.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **Tick**(`props`): `Element`
 
-Defined in: [ticks.tsx:89](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/ticks.tsx#L89)
+Defined in: [ticks.tsx:89](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/ticks.tsx#L89)
 
 Renders a complete tick mark with both circle and label
 

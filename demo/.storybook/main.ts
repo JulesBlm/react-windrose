@@ -18,11 +18,11 @@ const config: StorybookConfig = {
     options: {},
   },
   managerHead: (head, { configType }) => {
-    if (configType === 'PRODUCTION') {
-      return (`
+    if (configType === "PRODUCTION") {
+      return `
         <base href="/react-windrose/">
         ${head}
-      `);
+      `;
     }
   },
   viteFinal: async (config) => {

@@ -115,7 +115,13 @@ export interface TicksProps extends SVGProps<SVGGElement> {
  * @param props - The component props
  * @returns A group of SVG elements containing tick marks and labels
  */
-export function Ticks({ yScale, tickCount, outerRadius, tickProps, ...props }: TicksProps) {
+export function Ticks({
+  yScale,
+  tickCount,
+  outerRadius,
+  tickProps,
+  ...props
+}: TicksProps) {
   const yTicks = yScale.ticks(tickCount);
 
   return (

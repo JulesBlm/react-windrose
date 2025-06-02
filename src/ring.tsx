@@ -29,7 +29,11 @@ export function Ring({
   ...props
 }: RingProps) {
   return (
-    <g name={`ring-bin-${element.key}`} fill={colorScale(element.key)} {...props}>
+    <g
+      name={`ring-bin-${element.key}`}
+      fill={colorScale(element.key)}
+      {...props}
+    >
       {element.map((point) => {
         const path = arcGenerator(point);
         if (!path) {

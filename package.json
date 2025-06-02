@@ -1,6 +1,6 @@
 {
   "name": "react-windrose",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "React component library for creating wind rose diagrams",
   "keywords": [
     "windrose",
@@ -14,7 +14,7 @@
     "ci": "npm run build && npm run check-format && npm run check-exports",
     "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
     "doc": "typedoc --plugin typedoc-plugin-markdown --readme none --excludePrivate --excludeProtected --includeVersion --excludeExternals src/react-windrose.tsx src/use-windrose.ts src/labels.tsx src/ticks.tsx src/radial-lines.tsx src/ring.tsx src/legend.tsx",
-    "format": "prettier --write .",
+    "format": "prettier --write \"**/*.{ts,tsx,json}\"",
     "clean": "rm -rf dist",
     "build": "npm run clean && tsc",
     "lint": "eslint .",

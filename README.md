@@ -6,7 +6,6 @@
 
 `react-windrose` is built on top of D3.js for calculations and scales and uses React for rendering SVG elements. It provides a flexible way to create interactive wind rose diagrams.
 
-
 ![windrose chart made with react-windrose](./windrose.png)
 
 See [the Storybook](https://julesblom.com/react-windrose?path=/docs/windrose--docs) for examples.
@@ -36,12 +35,7 @@ const data = [
 const bins = ["low", "medium", "high"] as const;
 
 function MyWindRose() {
-  return (
-    <WindRose
-      data={data}
-      bins={bins}
-    />
-  );
+  return <WindRose data={data} bins={bins} />;
 }
 ```
 
@@ -50,7 +44,13 @@ function MyWindRose() {
 You can customize the appearance and behavior with these optional props:
 
 ```tsx
-const colorScheme = ["#f7fbff", "#deebf7", "#c6dbef", "#9ecae1", "#6baed6"] as const;
+const colorScheme = [
+  "#f7fbff",
+  "#deebf7",
+  "#c6dbef",
+  "#9ecae1",
+  "#6baed6",
+] as const;
 const labelDirections = ["N", "E", "S", "W"] as const;
 
 <WindRose
@@ -65,7 +65,7 @@ const labelDirections = ["N", "E", "S", "W"] as const;
   colorScheme={colorScheme}
   // Number of value markers (default: 4)
   tickCount={5}
-  // Inner and outer radius 
+  // Inner and outer radius
   innerRadius={20} // deafult 20
   outerRadius={200} // default calculated from width/height
   // Custom direction labels, in case you want to show fewer direction labels than in the data
@@ -74,7 +74,7 @@ const labelDirections = ["N", "E", "S", "W"] as const;
   padAngle={0.1}
   // Maximum value for the scale (defaults to max in data)
   maxY={20}
-/>
+/>;
 ```
 
 **Note:** The `total` per row in the data is automatically calculated by the component using the `sumRow` utility function and need not be provided in your input data to `<WindRose>`.
@@ -91,11 +91,7 @@ import { WindRose, VerticalLegend } from "react-windrose";
 
 function WindRoseWithLegend() {
   return (
-    <WindRose
-      data={data}
-      bins={bins}
-      colorScheme={colorScheme}
-    >
+    <WindRose data={data} bins={bins} colorScheme={colorScheme}>
       <VerticalLegend
         bins={bins}
         colorScheme={colorScheme}
@@ -268,6 +264,6 @@ For detailed API documentation, see the [docs](./docs/README.md).
 
 ## License
 
-MIT © [Jules Blom](https://julesblom.com) 
+MIT © [Jules Blom](https://julesblom.com)
 
 [Bedrock](https://bedrock.engineer)

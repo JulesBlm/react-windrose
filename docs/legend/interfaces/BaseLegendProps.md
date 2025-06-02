@@ -1,4 +1,4 @@
-[**react-windrose v1.0.0**](../../README.md)
+[**react-windrose v1.0.2**](../../README.md)
 
 ***
 
@@ -6,7 +6,7 @@
 
 # Interface: BaseLegendProps
 
-Defined in: [legend.tsx:3](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/legend.tsx#L3)
+Defined in: [legend.tsx:3](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/legend.tsx#L3)
 
 ## Extends
 
@@ -23,7 +23,7 @@ Defined in: [legend.tsx:3](https://github.com/JulesBlm/react-windrose/blob/abde2
 
 > **bins**: readonly `string`[]
 
-Defined in: [legend.tsx:5](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/legend.tsx#L5)
+Defined in: [legend.tsx:5](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/legend.tsx#L5)
 
 Array of labels of the bins for each legend entry
 
@@ -33,7 +33,7 @@ Array of labels of the bins for each legend entry
 
 > `optional` **children**: `ReactNode`
 
-Defined in: [legend.tsx:21](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/legend.tsx#L21)
+Defined in: [legend.tsx:21](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/legend.tsx#L21)
 
 Optional children to render inside the legend group, useful for adding a title or a background
 
@@ -47,7 +47,7 @@ Optional children to render inside the legend group, useful for adding a title o
 
 > **colorScheme**: readonly `string`[]
 
-Defined in: [legend.tsx:7](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/legend.tsx#L7)
+Defined in: [legend.tsx:7](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/legend.tsx#L7)
 
 Array of colors to use for each legend entry
 
@@ -57,7 +57,7 @@ Array of colors to use for each legend entry
 
 > `optional` **spacing**: `number`
 
-Defined in: [legend.tsx:13](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/legend.tsx#L13)
+Defined in: [legend.tsx:13](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/legend.tsx#L13)
 
 Additional spacing between legend entries in pixels (added to symbolHeight)
 
@@ -71,7 +71,7 @@ Additional spacing between legend entries in pixels (added to symbolHeight)
 
 > `optional` **symbolHeight**: `number`
 
-Defined in: [legend.tsx:11](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/legend.tsx#L11)
+Defined in: [legend.tsx:11](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/legend.tsx#L11)
 
 Height of the legend symbol in pixels
 
@@ -81,7 +81,7 @@ Height of the legend symbol in pixels
 
 > `optional` **symbolWidth**: `number`
 
-Defined in: [legend.tsx:9](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/legend.tsx#L9)
+Defined in: [legend.tsx:9](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/legend.tsx#L9)
 
 Width of the legend symbol in pixels
 
@@ -91,7 +91,7 @@ Width of the legend symbol in pixels
 
 > `optional` **textProps**: `SVGProps`\<`SVGTextElement`\>
 
-Defined in: [legend.tsx:19](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/legend.tsx#L19)
+Defined in: [legend.tsx:19](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/legend.tsx#L19)
 
 Additional props to pass to the text elements
 
@@ -101,7 +101,7 @@ Additional props to pass to the text elements
 
 > `optional` **textX**: `number`
 
-Defined in: [legend.tsx:15](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/legend.tsx#L15)
+Defined in: [legend.tsx:15](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/legend.tsx#L15)
 
 Horizontal offset for the text label in pixels
 
@@ -111,6 +111,6 @@ Horizontal offset for the text label in pixels
 
 > `optional` **textY**: `number`
 
-Defined in: [legend.tsx:17](https://github.com/JulesBlm/react-windrose/blob/abde2242853bd42ef8c57edc6c92a0c1b545713c/src/legend.tsx#L17)
+Defined in: [legend.tsx:17](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/legend.tsx#L17)
 
 Vertical offset for the text label in pixels
