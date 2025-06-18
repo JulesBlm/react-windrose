@@ -1,9 +1,8 @@
-import { max } from "d3-array";
 import { scaleBand, scaleLinear, scaleOrdinal } from "d3-scale";
 import { arc, type SeriesPoint, stack } from "d3-shape";
 import { useMemo } from "react";
 import type { WindroseDataPoint } from "./types.js";
-import { radians, TURN } from "./util.js";
+import { getMaxY, radians, TURN } from "./util.js";
 
 const directionAccessor = (d: { direction: string }) => d.direction;
 
@@ -44,7 +43,7 @@ export type UseWindRose<
  * @template TDirections - Type of the directions array
  * @param props - Configuration object for the wind rose chart
  * @returns An object containing:
- *   - labelXScale: Scale for positioning direction labels
+ *   - directionScale: Scale for positioning direction labels
  *   - yScale: Radial scale for mapping values to radius
  *   - colorScale: Ordinal scale for mapping bins to colors
  *   - arcGenerator: Function for generating arc paths for segments
@@ -63,12 +62,12 @@ export function useWindRose<
   colorScheme,
   labelDirections,
   padAngle = 0.05,
-  maxY = max(data, (d) => d.total) ?? 1,
+  maxY = getMaxY(data, bins) ?? 1,
 }: UseWindRose<TBins, TDirections>) {
   const dataDirections = useMemo(() => data.map(directionAccessor), [data]);
 
-  // An angular x-scale
-  const xScale = useMemo(
+  // An angular scale for directions of the bins
+  const arcDirectionScale = useMemo(
     () =>
       scaleBand()
         .domain(dataDirections)
@@ -78,7 +77,7 @@ export function useWindRose<
   );
 
   // We might have fewer labels than directions, so we a separate scale for the labels
-  const labelXScale = useMemo(
+  const directionScale = useMemo(
     () =>
       scaleBand()
         .domain(labelDirections ?? dataDirections)
@@ -87,7 +86,6 @@ export function useWindRose<
     [labelDirections, dataDirections],
   );
 
-  // A radial y-scale maintains area proportionality of radial bars
   const yScale = useMemo(() => {
     return scaleLinear().domain([0, maxY]).range([innerRadius, outerRadius]);
   }, [innerRadius, outerRadius, maxY]);
@@ -100,13 +98,17 @@ export function useWindRose<
   const arcGenerator = useMemo(
     () =>
       arc<SeriesPoint<{ direction: string }>>()
-        .startAngle((d) => xScale(d.data.direction)!)
-        .endAngle((d) => xScale(d.data.direction)! + xScale.bandwidth())
+        .startAngle((d) => arcDirectionScale(d.data.direction)!)
+        .endAngle(
+          (d) =>
+            arcDirectionScale(d.data.direction)! +
+            arcDirectionScale.bandwidth(),
+        )
         .innerRadius((d) => yScale(d[0]))
         .outerRadius((d) => yScale(d[1]))
         .padRadius(innerRadius)
         .padAngle(padAngle),
-    [innerRadius, padAngle, xScale, yScale],
+    [innerRadius, padAngle, arcDirectionScale, yScale],
   );
 
   const stackedData = useMemo(
@@ -122,7 +124,7 @@ export function useWindRose<
   const angleOffset = -angleStep / 2;
 
   return {
-    labelXScale,
+    directionScale,
     directions: labelDirections ?? dataDirections,
     yScale,
     colorScale,

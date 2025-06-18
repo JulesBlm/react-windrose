@@ -1,4 +1,4 @@
-[**react-windrose v1.0.2**](../../README.md)
+[**react-windrose v2.0.0**](../../README.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **UseWindRose**\<`TBins`, `TDirections`\> = `object`
 
-Defined in: [use-windrose.ts:15](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/use-windrose.ts#L15)
+Defined in: [use-windrose.ts:14](https://github.com/JulesBlm/react-windrose/blob/2451c9dad633102e7fc35b9698082791f2a32227/src/use-windrose.ts#L14)
 
 Props for the useWindRose hook
 
@@ -32,7 +32,7 @@ Type of the directions array
 
 > **bins**: `TBins`
 
-Defined in: [use-windrose.ts:20](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/use-windrose.ts#L20)
+Defined in: [use-windrose.ts:19](https://github.com/JulesBlm/react-windrose/blob/2451c9dad633102e7fc35b9698082791f2a32227/src/use-windrose.ts#L19)
 
 Array of bin labels for the wind rose segments
 
@@ -42,7 +42,7 @@ Array of bin labels for the wind rose segments
 
 > **colorScheme**: `ReadonlyArray`\<`string`\>
 
-Defined in: [use-windrose.ts:28](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/use-windrose.ts#L28)
+Defined in: [use-windrose.ts:27](https://github.com/JulesBlm/react-windrose/blob/2451c9dad633102e7fc35b9698082791f2a32227/src/use-windrose.ts#L27)
 
 Array of colors to use for the wind rose segments
 
@@ -52,7 +52,7 @@ Array of colors to use for the wind rose segments
 
 > **data**: `ReadonlyArray`\<`WindroseDataPoint`\<`TBins`\[`number`\], `TDirections`\[`number`\]\>\>
 
-Defined in: [use-windrose.ts:22](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/use-windrose.ts#L22)
+Defined in: [use-windrose.ts:21](https://github.com/JulesBlm/react-windrose/blob/2451c9dad633102e7fc35b9698082791f2a32227/src/use-windrose.ts#L21)
 
 Array of data points for the wind rose chart
 
@@ -62,7 +62,7 @@ Array of data points for the wind rose chart
 
 > **innerRadius**: `number`
 
-Defined in: [use-windrose.ts:24](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/use-windrose.ts#L24)
+Defined in: [use-windrose.ts:23](https://github.com/JulesBlm/react-windrose/blob/2451c9dad633102e7fc35b9698082791f2a32227/src/use-windrose.ts#L23)
 
 Inner radius of the wind rose chart
 
@@ -72,7 +72,7 @@ Inner radius of the wind rose chart
 
 > `optional` **labelDirections**: `string`[]
 
-Defined in: [use-windrose.ts:31](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/use-windrose.ts#L31)
+Defined in: [use-windrose.ts:30](https://github.com/JulesBlm/react-windrose/blob/2451c9dad633102e7fc35b9698082791f2a32227/src/use-windrose.ts#L30)
 
 Optional array of direction labels to display. If not provided, all directions from data will be shown.
 This allows displaying fewer labels than there are directions in the data.
@@ -83,7 +83,7 @@ This allows displaying fewer labels than there are directions in the data.
 
 > `optional` **maxY**: `number`
 
-Defined in: [use-windrose.ts:35](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/use-windrose.ts#L35)
+Defined in: [use-windrose.ts:34](https://github.com/JulesBlm/react-windrose/blob/2451c9dad633102e7fc35b9698082791f2a32227/src/use-windrose.ts#L34)
 
 Optional maximum value for the y-axis scale. If not provided, will use the maximum value in the data
 
@@ -93,7 +93,7 @@ Optional maximum value for the y-axis scale. If not provided, will use the maxim
 
 > **outerRadius**: `number`
 
-Defined in: [use-windrose.ts:26](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/use-windrose.ts#L26)
+Defined in: [use-windrose.ts:25](https://github.com/JulesBlm/react-windrose/blob/2451c9dad633102e7fc35b9698082791f2a32227/src/use-windrose.ts#L25)
 
 Outer radius of the wind rose chart
 
@@ -103,6 +103,6 @@ Outer radius of the wind rose chart
 
 > `optional` **padAngle**: `number`
 
-Defined in: [use-windrose.ts:33](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/use-windrose.ts#L33)
+Defined in: [use-windrose.ts:32](https://github.com/JulesBlm/react-windrose/blob/2451c9dad633102e7fc35b9698082791f2a32227/src/use-windrose.ts#L32)
 
 Angle padding between segments in radians

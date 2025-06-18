@@ -1,3 +1,6 @@
+import { max } from "d3-array";
+import type { WindroseDataPoint } from "./types.js";
+
 export function radians(degrees: number) {
   return (degrees * Math.PI) / 180;
 }
@@ -38,4 +41,19 @@ export function sumRow<TBins extends ReadonlyArray<string>>(
     }
   }
   return sum;
+}
+
+export function getMaxY<
+  TBins extends ReadonlyArray<string> = ReadonlyArray<string>,
+  TDirections extends ReadonlyArray<string> = ReadonlyArray<string>,
+>(
+  data: ReadonlyArray<WindroseDataPoint<TBins[number], TDirections[number]>>,
+  bins: TBins,
+) {
+  const dataWithTotals = data.map((row) => ({
+    ...row,
+    total: sumRow(row, bins),
+  }));
+
+  return max(dataWithTotals, (d) => d.total);
 }

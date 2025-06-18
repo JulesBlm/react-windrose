@@ -40,7 +40,7 @@ function CustomWindRose({
   );
 
   const {
-    labelXScale,
+    directionScale,
     yScale,
     colorScale,
     directions,
@@ -79,7 +79,7 @@ function CustomWindRose({
       </g>
 
       <DirectionLabels
-        xScale={labelXScale}
+        directionScale={directionScale}
         directions={directions}
         outerRadius={outerRadius}
         fontSize={14}
@@ -161,7 +161,7 @@ export const CustomCircles: Story = {
     );
 
     const {
-      labelXScale,
+      directionScale,
       yScale,
       colorScale,
       arcGenerator,
@@ -200,7 +200,7 @@ export const CustomCircles: Story = {
         </g>
 
         <DirectionLabels
-          xScale={labelXScale}
+          directionScale={directionScale}
           directions={directions}
           outerRadius={outerRadius}
           fontSize={14}
@@ -253,7 +253,7 @@ export const CustomYAxis: Story = {
     );
 
     const {
-      labelXScale,
+      directionScale,
       yScale,
       colorScale,
       arcGenerator,
@@ -294,7 +294,7 @@ export const CustomYAxis: Story = {
         </g>
 
         <DirectionLabels
-          xScale={labelXScale}
+          directionScale={directionScale}
           directions={directions}
           outerRadius={outerRadius}
           fontSize={14}

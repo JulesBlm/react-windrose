@@ -23,7 +23,7 @@ describe("useWindRose hook", () => {
   it("should return all required properties", () => {
     const { result } = renderHook(() => useWindRose(defaultProps));
 
-    expect(result.current).toHaveProperty("labelXScale");
+    expect(result.current).toHaveProperty("directionScale");
     expect(result.current).toHaveProperty("yScale");
     expect(result.current).toHaveProperty("colorScale");
     expect(result.current).toHaveProperty("arcGenerator");
@@ -42,8 +42,8 @@ describe("useWindRose hook", () => {
   it("should create scales with correct domains and ranges", () => {
     const { result } = renderHook(() => useWindRose(defaultProps));
 
-    // Test labelXScale domain (should use dataDirections when labelDirections not provided)
-    expect(result.current.labelXScale.domain()).toEqual(["N", "NE", "E", "SE"]);
+    // Test directionScale domain (should use dataDirections when labelDirections not provided)
+    expect(result.current.directionScale.domain()).toEqual(["N", "NE", "E", "SE"]);
 
     // Test yScale domain
     expect(result.current.yScale.domain()).toEqual([0, 19]); // max total is 19
@@ -73,7 +73,7 @@ describe("useWindRose hook", () => {
       initialProps: defaultProps,
     });
 
-    const initialLabelXScale = result.current.labelXScale;
+    const initialDirectionScale = result.current.directionScale;
     const initialYScale = result.current.yScale;
     const initialColorScale = result.current.colorScale;
 
@@ -87,8 +87,8 @@ describe("useWindRose hook", () => {
 
     rerender({ ...defaultProps, data: newData });
 
-    // labelXScale and colorScale should be the same (same directions/bins)
-    expect(result.current.labelXScale).toBe(initialLabelXScale);
+    // directionScale and colorScale should be the same (same directions/bins)
+    expect(result.current.directionScale).toBe(initialDirectionScale);
     expect(result.current.colorScale).toBe(initialColorScale);
 
     // yScale should change due to different maxY
@@ -116,8 +116,8 @@ describe("useWindRose hook", () => {
     };
     const { result } = renderHook(() => useWindRose(propsWithLabels));
 
-    // labelXScale should use the provided labelDirections
-    expect(result.current.labelXScale.domain()).toEqual(["N", "E"]);
+    // directionScale should use the provided labelDirections
+    expect(result.current.directionScale.domain()).toEqual(["N", "E"]);
 
     // angleStep should be calculated based on labelDirections length
     expect(result.current.angleStep).toBe(360 / 2); // 180 degrees

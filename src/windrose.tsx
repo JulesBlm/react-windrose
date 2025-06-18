@@ -1,11 +1,11 @@
-import { useMemo, type ReactNode, type SVGProps } from "react";
+import { type ReactNode, type SVGProps } from "react";
 import { DirectionLabels } from "./labels.js";
 import { RadialLines } from "./radial-lines.js";
 import { Ring } from "./ring.js";
 import { Ticks } from "./ticks.js";
 import type { WindroseDataPoint } from "./types.js";
 import { useWindRose } from "./use-windrose.js";
-import { blueColorScheme, fluidFontSize, sumRow } from "./util.js";
+import { blueColorScheme, fluidFontSize } from "./util.js";
 
 /**
  * Props for the WindRose component that renders a wind rose chart
@@ -71,17 +71,8 @@ export function WindRose<
   children,
   ...props
 }: WindRoseProps<TBins, TDirections>) {
-  const dataWithRowTotals = useMemo(
-    () =>
-      data.map((row) => ({
-        ...row,
-        total: sumRow(row, bins),
-      })),
-    [data, bins],
-  );
-
   const {
-    labelXScale,
+    directionScale,
     yScale,
     directions,
     colorScale,
@@ -90,7 +81,7 @@ export function WindRose<
     angleStep,
     angleOffset,
   } = useWindRose({
-    data: dataWithRowTotals,
+    data,
     innerRadius,
     outerRadius,
     colorScheme,
@@ -123,7 +114,7 @@ export function WindRose<
       </g>
 
       <DirectionLabels
-        xScale={labelXScale}
+        directionScale={directionScale}
         directions={directions}
         outerRadius={outerRadius}
       />

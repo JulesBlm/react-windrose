@@ -1,4 +1,4 @@
-[**react-windrose v1.0.2**](../../README.md)
+[**react-windrose v2.0.0**](../../README.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **useWindRose**\<`TBins`, `TDirections`\>(`props`): `object`
 
-Defined in: [use-windrose.ts:55](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/use-windrose.ts#L55)
+Defined in: [use-windrose.ts:54](https://github.com/JulesBlm/react-windrose/blob/2451c9dad633102e7fc35b9698082791f2a32227/src/use-windrose.ts#L54)
 
 A React hook that generates the necessary scales and data transformations for a wind rose chart.
 This hook handles the creation of angular scales for directions, radial scales for values,
@@ -41,7 +41,7 @@ Configuration object for the wind rose chart
 `object`
 
 An object containing:
-  - labelXScale: Scale for positioning direction labels
+  - directionScale: Scale for positioning direction labels
   - yScale: Radial scale for mapping values to radius
   - colorScale: Ordinal scale for mapping bins to colors
   - arcGenerator: Function for generating arc paths for segments
@@ -69,13 +69,13 @@ An object containing:
 
 > **directions**: `string`[]
 
-### labelXScale
+### directionScale
 
-> **labelXScale**: `ScaleBand`\<`string`\>
+> **directionScale**: `ScaleBand`\<`string`\>
 
 ### stackedData
 
-> **stackedData**: `Series`\<`{ [K in string]: (BinsPoint<TBins[number]> & DefaultWindroseProps<TDirections[number]>)[K] }`, `TBins`\[`number`\]\>[]
+> **stackedData**: `Series`\<`{ [K in string]: (BinsPoint<TBins[number]> & DirectionData<TDirections[number]>)[K] }`, `TBins`\[`number`\]\>[]
 
 ### yScale
 

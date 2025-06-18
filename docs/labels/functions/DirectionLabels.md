@@ -1,4 +1,4 @@
-[**react-windrose v1.0.2**](../../README.md)
+[**react-windrose v2.0.0**](../../README.md)
 
 ***
 
@@ -8,7 +8,7 @@
 
 > **DirectionLabels**(`props`): `Element`
 
-Defined in: [labels.tsx:23](https://github.com/JulesBlm/react-windrose/blob/110788d7f0f8c8a16b24f8b46b367a8a14282451/src/labels.tsx#L23)
+Defined in: [labels.tsx:23](https://github.com/JulesBlm/react-windrose/blob/2451c9dad633102e7fc35b9698082791f2a32227/src/labels.tsx#L23)
 
 Renders a group of direction labels around a circular chart
 

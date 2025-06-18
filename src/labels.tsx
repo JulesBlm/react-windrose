@@ -10,7 +10,7 @@ export interface DirectionLabelsProps extends SVGProps<SVGGElement> {
   /** The radius of the outer circle where labels will be positioned */
   outerRadius: number;
   /** D3 scale for mapping directions to angles */
-  xScale: ScaleBand<string>;
+  directionScale: ScaleBand<string>;
   /** Array of direction names to display as labels */
   directions: Array<string> | ReadonlyArray<string>;
 }
@@ -22,7 +22,7 @@ export interface DirectionLabelsProps extends SVGProps<SVGGElement> {
  */
 export function DirectionLabels({
   outerRadius,
-  xScale,
+  directionScale,
   directions,
   fontSize = fluidFontSize(0.1)(outerRadius),
   ...props
@@ -47,7 +47,7 @@ export function DirectionLabels({
           key={direction}
           direction={direction}
           angleOffset={angleOffset}
-          xScale={xScale}
+          directionScale={directionScale}
           outerRadius={outerRadius}
         />
       ))}
@@ -64,7 +64,7 @@ export interface LabelProps {
   /** Angular offset to adjust label positioning */
   angleOffset: number;
   /** D3 scale for mapping directions to angles */
-  xScale: ScaleBand<string>;
+  directionScale: ScaleBand<string>;
   /** The radius of the outer circle where the label will be positioned */
   outerRadius: number;
   /** Optional offset from the outer radius (defaults to 10% of outerRadius) */
@@ -79,11 +79,11 @@ export interface LabelProps {
 export function Label({
   direction,
   angleOffset,
-  xScale,
+  directionScale,
   outerRadius,
   offset = 0.1 * outerRadius,
 }: LabelProps) {
-  const baseRotation = xScale(direction)! + xScale.bandwidth() / 2;
+  const baseRotation = directionScale(direction)! + directionScale.bandwidth() / 2;
   const isInLeftHalf = (baseRotation + Math.PI / 2) % (2 * Math.PI) < Math.PI;
   const rotationLabel = isInLeftHalf ? 90 : -90;
   const rotation = (baseRotation * 180) / Math.PI - (90 - angleOffset);

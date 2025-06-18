@@ -123,7 +123,7 @@ The `useWindRose` hook provides all the necessary scales and generators for crea
 
 ```typescript
 const {
-  xScale,       // D3 scale for the angular direction
+  directionScale,       // D3 scale for the angular direction
   yScale,       // D3 scale for the radial values
   colorScale,   // D3 scale for the colors
   directions    // Direction labels to display
@@ -180,7 +180,7 @@ function CustomWindRose({ data, bins, width, height, colorScheme }) {
 
   // Use the hook to get scales and generators
   const {
-    xScale,
+    directionScale,
     yScale,
     colorScale,
     directions,
@@ -218,7 +218,7 @@ function CustomWindRose({ data, bins, width, height, colorScheme }) {
       </g>
 
       <DirectionLabels
-        xScale={xScale}
+        directionScale={directionScale}
         angleOffset={angleOffset}
         directions={directions}
         outerRadius={outerRadius}

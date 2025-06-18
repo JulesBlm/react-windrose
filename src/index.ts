@@ -19,7 +19,7 @@ export {
 } from "./ticks.js";
 export type {
   BinsPoint,
-  DefaultWindroseProps,
+  DirectionData,
   WindroseDataPoint,
 } from "./types.js";
 export { useWindRose, type UseWindRose } from "./use-windrose.js";
